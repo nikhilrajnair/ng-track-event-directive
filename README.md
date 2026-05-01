@@ -30,9 +30,7 @@ const mixpanelAdapter: TrackingAdapter = {
 };
 
 export const appConfig: ApplicationConfig = {
-  providers: [
-    provideTrackingAdapter(mixpanelAdapter),
-  ],
+  providers: [provideTrackingAdapter(mixpanelAdapter)],
 };
 ```
 
@@ -55,9 +53,7 @@ export class MyComponent {}
 Use the `trackConfig` helper to build a `TrackConfig` and bind it to the `trackEvent` directive.
 
 ```html
-<button [trackEvent]="trackConfig('button:clicked', { label: 'Sign Up' })">
-  Sign Up
-</button>
+<button [trackEvent]="trackConfig('button:clicked', { label: 'Sign Up' })">Sign Up</button>
 ```
 
 ---
@@ -66,27 +62,21 @@ Use the `trackConfig` helper to build a `TrackConfig` and bind it to the `trackE
 
 The trigger is inferred automatically from the **suffix** of the event name:
 
-| Event name suffix | Trigger | Default `once` |
-|---|---|---|
-| `:clicked` | `click` | `false` |
-| `:hovered` | `hover` | `false` |
-| `:viewed` | `view` (IntersectionObserver) | `true` |
+| Event name suffix | Trigger                       | Default `once` |
+| ----------------- | ----------------------------- | -------------- |
+| `:clicked`        | `click`                       | `false`        |
+| `:hovered`        | `hover`                       | `false`        |
+| `:viewed`         | `view` (IntersectionObserver) | `true`         |
 
 ```html
 <!-- Fires on every click -->
-<button [trackEvent]="trackConfig('add-to-cart:clicked', { productId: 42 })">
-  Add to Cart
-</button>
+<button [trackEvent]="trackConfig('add-to-cart:clicked', { productId: 42 })">Add to Cart</button>
 
 <!-- Fires once when the element first enters the viewport -->
-<section [trackEvent]="trackConfig('hero-banner:viewed')">
-  Hero Banner
-</section>
+<section [trackEvent]="trackConfig('hero-banner:viewed')">Hero Banner</section>
 
 <!-- Fires on every mouse-enter -->
-<div [trackEvent]="trackConfig('tooltip:hovered', { tooltip: 'help' })">
-  Hover me
-</div>
+<div [trackEvent]="trackConfig('tooltip:hovered', { tooltip: 'help' })">Hover me</div>
 ```
 
 ---
@@ -95,8 +85,8 @@ The trigger is inferred automatically from the **suffix** of the event name:
 
 ```ts
 interface TrackConfig<E extends string = string, D = unknown> {
-  event: E;   // Required. Event name — suffix determines the trigger.
-  data?: D;   // Optional. Arbitrary payload forwarded to the adapter.
+  event: E; // Required. Event name — suffix determines the trigger.
+  data?: D; // Optional. Arbitrary payload forwarded to the adapter.
   once?: boolean; // Optional. Override the default fire-once behaviour.
 }
 ```
@@ -131,16 +121,16 @@ The adapter is optional at runtime — if none is provided, the directive silent
 
 ## API Reference
 
-| Symbol | Kind | Description |
-|---|---|---|
-| `TrackEventDirective` | Directive | Core directive. Selector: `[trackEvent]`. |
-| `trackConfig` | Function | Type-safe `TrackConfig` factory. |
-| `provideTrackingAdapter` | Function | Registers an adapter via DI. |
-| `TRACKING_ADAPTER` | InjectionToken | Token used to inject a custom adapter. |
-| `parseTriggerFromEvent` | Function | Parses a `TrackTrigger` from an event string. |
-| `TrackConfig` | Type | Configuration interface for the directive input. |
-| `TrackTrigger` | Type | `'click' \| 'view' \| 'hover' \| 'unknown'` |
-| `TrackingAdapter` | Type | Interface for custom adapter implementations. |
+| Symbol                   | Kind           | Description                                      |
+| ------------------------ | -------------- | ------------------------------------------------ |
+| `TrackEventDirective`    | Directive      | Core directive. Selector: `[trackEvent]`.        |
+| `trackConfig`            | Function       | Type-safe `TrackConfig` factory.                 |
+| `provideTrackingAdapter` | Function       | Registers an adapter via DI.                     |
+| `TRACKING_ADAPTER`       | InjectionToken | Token used to inject a custom adapter.           |
+| `parseTriggerFromEvent`  | Function       | Parses a `TrackTrigger` from an event string.    |
+| `TrackConfig`            | Type           | Configuration interface for the directive input. |
+| `TrackTrigger`           | Type           | `'click' \| 'view' \| 'hover' \| 'unknown'`      |
+| `TrackingAdapter`        | Type           | Interface for custom adapter implementations.    |
 
 ---
 

@@ -6,6 +6,10 @@ export function parseTriggerFromEvent(event: string): TrackTrigger {
   return SUFFIX_TRIGGER_MAP[triggerSuffix] ?? 'unknown';
 }
 
-export function trackConfig<E extends string, D = unknown>(event: E, data?: D, once?: boolean): TrackConfig<E, D> {
+export function trackConfig<E extends string, D = unknown>(
+  event: E,
+  data?: D,
+  once?: boolean,
+): TrackConfig<E, D> {
   return { event, ...(data !== undefined && { data }), ...(once !== undefined && { once }) };
 }

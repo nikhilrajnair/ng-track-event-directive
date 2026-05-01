@@ -59,7 +59,10 @@ function setup(config?: TrackConfig<string, unknown>) {
 describe('TrackEventDirective', () => {
   beforeEach(() => {
     MockIntersectionObserver.instances.length = 0;
-    vi.stubGlobal('IntersectionObserver', MockIntersectionObserver as unknown as typeof IntersectionObserver);
+    vi.stubGlobal(
+      'IntersectionObserver',
+      MockIntersectionObserver as unknown as typeof IntersectionObserver,
+    );
   });
 
   afterEach(() => {

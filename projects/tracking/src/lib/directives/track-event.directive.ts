@@ -1,4 +1,12 @@
-import { AfterViewInit, Directive, ElementRef, inject, input, NgZone, OnDestroy } from '@angular/core';
+import {
+  AfterViewInit,
+  Directive,
+  ElementRef,
+  inject,
+  input,
+  NgZone,
+  OnDestroy,
+} from '@angular/core';
 import { parseTriggerFromEvent } from '../helpers/track.helper';
 import { injectTrackingAdapter } from '../providers/tracking-adapter';
 import type { TrackConfig } from '../types/track.types';
@@ -63,7 +71,7 @@ export class TrackEventDirective implements AfterViewInit, OnDestroy {
             }
           }
         },
-        { threshold: 0.1 }
+        { threshold: 0.1 },
       );
 
       this.observer.observe(this.el.nativeElement);

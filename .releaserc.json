@@ -1,8 +1,6 @@
 {
   "repositoryUrl": "https://github.com/nikhilrajnair/ng-track-event-directive.git",
-  "branches": [
-    "main"
-  ],
+  "branches": ["main"],
   "tagFormat": "v${version}",
   "plugins": [
     "@semantic-release/commit-analyzer",
@@ -23,9 +21,7 @@
     [
       "@semantic-release/git",
       {
-        "assets": [
-          "CHANGELOG.md"
-        ],
+        "assets": ["CHANGELOG.md"],
         "message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
       }
     ]
