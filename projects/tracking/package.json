@@ -2,7 +2,13 @@
   "name": "ng-track-event-directive",
   "version": "1.0.0",
   "description": "Reusable Angular directive for declarative tracking events with click, hover, and view triggers.",
-  "keywords": ["angular", "tracking", "directive", "analytics", "mixpanel"],
+  "keywords": [
+    "angular",
+    "tracking",
+    "directive",
+    "analytics",
+    "mixpanel"
+  ],
   "license": "MIT",
   "peerDependencies": {
     "@angular/common": "^21.2.0",

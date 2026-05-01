@@ -6,6 +6,8 @@
     "build": "ng build tracking",
     "build:watch": "ng build tracking --watch --configuration development",
     "test": "ng test tracking --watch=false",
+    "prettier": "prettier . --check",
+    "prettier:fix": "prettier . --write",
     "semantic-release": "semantic-release",
     "pack:lib": "cd dist/tracking && npm pack",
     "publish:lib": "cd dist/tracking && npm publish --access public"
