@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/nikhilrajnair/ng-track-event-directive/compare/v1.0.0...v1.0.1) (2026-05-01)
+
+
+### Bug Fixes
+
+* **tests:** add missing once and destroy coverage for TrackEventDirective ([4f8bcb4](https://github.com/nikhilrajnair/ng-track-event-directive/commit/4f8bcb4c7e4e813ce7a58d4f59aa5eea1cf42e35))
+
 # 1.0.0 (2026-05-01)
 
 ### Bug Fixes
