@@ -117,4 +117,32 @@ describe('TrackEventDirective', () => {
 
     expect(trackSpy).toHaveBeenCalledWith('user-edit:clicked', { id: 12 });
   });
+
+  it('tracks click only once when once is true', () => {
+    const { el, trackSpy } = setup({ event: 'user-save:clicked', once: true });
+
+    el.nativeElement.click();
+    el.nativeElement.click();
+    el.nativeElement.click();
+
+    expect(trackSpy).toHaveBeenCalledTimes(1);
+  });
+
+  it('tracks hover only once when once is true', () => {
+    const { el, trackSpy } = setup({ event: 'menu:hovered', once: true });
+
+    el.nativeElement.dispatchEvent(new MouseEvent('mouseenter'));
+    el.nativeElement.dispatchEvent(new MouseEvent('mouseenter'));
+
+    expect(trackSpy).toHaveBeenCalledTimes(1);
+  });
+
+  it('disconnects the observer on destroy', () => {
+    const { fixture } = setup({ event: 'table:viewed' });
+
+    const [observer] = MockIntersectionObserver.instances;
+    fixture.destroy();
+
+    expect(observer.disconnect).toHaveBeenCalled();
+  });
 });
