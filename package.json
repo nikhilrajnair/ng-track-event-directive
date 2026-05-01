@@ -6,6 +6,7 @@
     "build": "ng build tracking",
     "build:watch": "ng build tracking --watch --configuration development",
     "test": "ng test tracking --watch=false",
+    "semantic-release": "semantic-release",
     "pack:lib": "cd dist/tracking && npm pack",
     "publish:lib": "cd dist/tracking && npm publish --access public"
   },
@@ -28,9 +29,14 @@
     "@angular/build": "^21.2.6",
     "@angular/cli": "^21.2.6",
     "@angular/compiler-cli": "^21.2.0",
+    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/git": "^10.0.1",
+    "@semantic-release/github": "^11.0.6",
+    "@semantic-release/npm": "^12.0.2",
     "happy-dom": "^20.0.5",
     "ng-packagr": "^21.2.0",
     "prettier": "^3.8.1",
+    "semantic-release": "^24.2.9",
     "typescript": "~5.9.2",
     "vitest": "^4.0.8"
   }
