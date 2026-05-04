@@ -1,6 +1,14 @@
 # ng-track-event-directive
 
-A reusable Angular library that provides a declarative tracking directive and helper utilities.
+Declarative Angular analytics tracking with a standalone directive and typed helpers.
+
+Track events directly in templates using consistent suffix conventions:
+
+- `:clicked` -> click
+- `:hovered` -> mouseenter
+- `:viewed` -> viewport visibility (IntersectionObserver)
+
+---
 
 ## Install
 
@@ -8,40 +16,39 @@ A reusable Angular library that provides a declarative tracking directive and he
 npm install ng-track-event-directive
 ```
 
-## What it provides
+**Peer dependencies:** `@angular/core` and `@angular/common` v21.2+
 
-- `TrackEventDirective` for template-based tracking.
-- `trackConfig()` helper to build stable track config objects.
-- `parseTriggerFromEvent()` for trigger inference from event suffixes.
-- `provideTrackingAdapter()` and `TRACKING_ADAPTER` token to connect any analytics backend.
+---
 
-## Trigger suffix conventions
+## Why this library
 
-- `:clicked` maps to click events.
-- `:hovered` maps to mouseenter events.
-- `:viewed` maps to IntersectionObserver viewport events.
+- Keeps event wiring close to UI markup.
+- Provides consistent trigger behavior from event names.
+- Works with any analytics backend through a small adapter interface.
+- Safely no-ops when no adapter is provided.
 
-## Setup in consumer app
+---
 
-Provide an adapter in bootstrap providers:
+## Quick Start
+
+### 1. Provide a tracking adapter
 
 ```ts
-import { bootstrapApplication } from '@angular/platform-browser';
-import { provideTrackingAdapter } from 'ng-track-event-directive';
+import { ApplicationConfig } from '@angular/core';
+import { provideTrackingAdapter, TrackingAdapter } from 'ng-track-event-directive';
 
-bootstrapApplication(AppComponent, {
-  providers: [
-    provideTrackingAdapter({
-      track(eventName: string, data?: unknown) {
-        // Forward to Mixpanel, Segment, Amplitude, etc.
-        console.log('track', eventName, data);
-      },
-    }),
-  ],
-});
+const adapter: TrackingAdapter = {
+  track(eventName: string, data?: unknown): void {
+    console.log('track', eventName, data);
+  },
+};
+
+export const appConfig: ApplicationConfig = {
+  providers: [provideTrackingAdapter(adapter)],
+};
 ```
 
-Use in a standalone component:
+### 2. Import directive in standalone component
 
 ```ts
 import { Component } from '@angular/core';
@@ -51,27 +58,114 @@ import { TrackEventDirective, trackConfig } from 'ng-track-event-directive';
   selector: 'app-demo',
   imports: [TrackEventDirective],
   template: `
-    <button [trackEvent]="saveTrack">Save</button>
-    <div [trackEvent]="tableViewedTrack">Table</div>
+    <button [trackEvent]="trackConfig('signup:clicked', { source: 'hero' })">
+      Sign Up
+    </button>
   `,
 })
 export class DemoComponent {
-  saveTrack = trackConfig('price-book:clicked', { source: 'toolbar' });
-  tableViewedTrack = trackConfig('users-table:viewed');
+  protected readonly trackConfig = trackConfig;
 }
 ```
 
-## Build and publish
+---
+
+## Trigger Mapping
+
+| Event name suffix | Trigger                       | Default `once` |
+| ----------------- | ----------------------------- | -------------- |
+| `:clicked`        | `click`                       | `false`        |
+| `:hovered`        | `hover`                       | `false`        |
+| `:viewed`         | `view` (IntersectionObserver) | `true`         |
+
+Use `once` in `TrackConfig` to override defaults.
+
+---
+
+## API
+
+| Symbol                   | Kind           | Description                                      |
+| ------------------------ | -------------- | ------------------------------------------------ |
+| `TrackEventDirective`    | Directive      | Core directive. Selector: `[trackEvent]`.        |
+| `trackConfig`            | Function       | Type-safe `TrackConfig` factory.                 |
+| `provideTrackingAdapter` | Function       | Registers an adapter via DI.                     |
+| `TRACKING_ADAPTER`       | InjectionToken | Token used to inject a custom adapter.           |
+| `parseTriggerFromEvent`  | Function       | Parses a `TrackTrigger` from an event string.    |
+| `TrackConfig`            | Type           | Configuration interface for the directive input. |
+| `TrackTrigger`           | Type           | `'click' \| 'view' \| 'hover' \| 'unknown'`      |
+| `TrackingAdapter`        | Type           | Interface for custom adapter implementations.    |
+
+---
+
+## Realtime Mixpanel Example
+
+```ts
+import mixpanel from 'mixpanel-browser';
+import { provideTrackingAdapter, TrackingAdapter } from 'ng-track-event-directive';
+
+mixpanel.init('YOUR_MIXPANEL_PROJECT_TOKEN', {
+  track_pageview: true,
+  persistence: 'localStorage',
+});
+
+const mixpanelAdapter: TrackingAdapter = {
+  track(eventName, data) {
+    mixpanel.track(eventName, (data ?? {}) as Record<string, unknown>);
+  },
+};
+```
+
+Verify events in browser console first, then in Mixpanel **Events > Live View**.
+
+---
+
+## Integration Examples and Prerequisites
+
+This directive is provider-agnostic and works with any analytics SDK through `TrackingAdapter`.
+
+### Prerequisites
+
+- Angular v21.2+
+- `ng-track-event-directive` installed
+- Provider SDK installed in your app
+
+Mixpanel SDK install:
 
 ```bash
+npm install mixpanel-browser
+```
+
+### Provider example status
+
+- Mixpanel: available in this README.
+- Segment: coming soon.
+- GA4: coming soon.
+- Custom backend: available via `provideTrackingAdapter()`.
+
+---
+
+## Versioning and Migration
+
+- This package uses semantic versioning.
+- Check `CHANGELOG.md` in the repository for release notes.
+- For major upgrades, follow migration notes in the repository root README and package README.
+
+---
+
+## Development
+
+```bash
+npm install
 npm run build
 npm run test
 npm run pack:lib
 npm run publish:lib
 ```
 
+---
+
 ## Notes
 
-- This package is intentionally generic and does not include app-specific event contracts.
-- If no adapter is provided, tracking calls are safely ignored.
-- `:viewed` tracking requires `IntersectionObserver`; when unavailable, the directive safely no-ops.
+- `:viewed` requires `IntersectionObserver` support.
+- If an adapter is not registered, calls are intentionally ignored.
+- The GitHub Pages docs/demo in this repository is the canonical onboarding reference.

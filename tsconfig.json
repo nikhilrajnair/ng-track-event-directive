@@ -15,6 +15,7 @@
     "target": "ES2022",
     "module": "preserve",
     "paths": {
+      "ng-track-event-directive": ["./projects/tracking/src/public-api.ts"],
       "tracking": ["./dist/tracking"]
     }
   },
@@ -31,6 +32,9 @@
     },
     {
       "path": "./projects/tracking/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/demo-app/tsconfig.app.json"
     }
   ]
 }
