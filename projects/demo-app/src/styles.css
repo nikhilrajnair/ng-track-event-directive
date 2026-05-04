@@ -1,0 +1,20 @@
+@import 'tailwindcss';
+
+:root {
+  --clr-bg: #0d0f14;
+  --clr-surface: #161b27;
+  --clr-border: #252d3f;
+  --clr-text: #e2e8f0;
+  --clr-muted: #8892a4;
+  --clr-accent: #6c63ff;
+  --clr-accent-2: #00d4aa;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--clr-bg);
+  color: var(--clr-text);
+}
