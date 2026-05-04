@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/nikhilrajnair/ng-track-event-directive/compare/v1.0.1...v1.1.0) (2026-05-04)
+
+
+### Features
+
+* **demo-app:** add demo application with Mixpanel integration and tracking directive ([ca507c7](https://github.com/nikhilrajnair/ng-track-event-directive/commit/ca507c72b3012ed484074eae01653de4da48600b))
+
 ## [1.0.1](https://github.com/nikhilrajnair/ng-track-event-directive/compare/v1.0.0...v1.0.1) (2026-05-01)
 
 
