@@ -124,9 +124,7 @@ import { provideTrackingAdapter } from 'ng-track-event-directive';
 import { createMixpanelAdapter } from './tracking.adapter';
 
 export const appConfig: ApplicationConfig = {
-  providers: [
-    provideTrackingAdapter(createMixpanelAdapter('YOUR_MIXPANEL_PROJECT_TOKEN')),
-  ],
+  providers: [provideTrackingAdapter(createMixpanelAdapter('YOUR_MIXPANEL_PROJECT_TOKEN'))],
 };
 ```
 
