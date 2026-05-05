@@ -1,3 +1,5 @@
 {
+  "buildCommand": "ng build demo-app --configuration production --output-path docs",
+  "outputDirectory": "docs/browser",
   "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
 }
