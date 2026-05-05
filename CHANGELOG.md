@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/nikhilrajnair/ng-track-event-directive/compare/v1.1.0...v1.2.0) (2026-05-05)
+
+
+### Features
+
+* add provenance option to semantic-release npm configuration ([80c264c](https://github.com/nikhilrajnair/ng-track-event-directive/commit/80c264c6c4160483e69b720bdbd323fff722cc52))
+
 # [1.1.0](https://github.com/nikhilrajnair/ng-track-event-directive/compare/v1.0.1...v1.1.0) (2026-05-04)
 
 
