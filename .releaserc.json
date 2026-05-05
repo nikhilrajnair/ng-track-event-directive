@@ -14,7 +14,8 @@
     [
       "@semantic-release/npm",
       {
-        "pkgRoot": "dist/tracking"
+        "pkgRoot": "dist/tracking",
+        "provenance": true
       }
     ],
     "@semantic-release/github",
