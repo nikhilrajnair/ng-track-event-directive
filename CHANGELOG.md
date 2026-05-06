@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/nikhilrajnair/ng-track-event-directive/compare/v1.2.0...v1.3.0) (2026-05-06)
+
+
+### Features
+
+* enhance SEO and documentation in index.html and README.md ([0535813](https://github.com/nikhilrajnair/ng-track-event-directive/commit/05358133fbcbd6b4dafba2ea6cb4866bde35b22d))
+
 # [1.2.0](https://github.com/nikhilrajnair/ng-track-event-directive/compare/v1.1.0...v1.2.0) (2026-05-05)
 
 
