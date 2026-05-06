@@ -1,3 +1,10 @@
+## [1.3.1](https://github.com/nikhilrajnair/ng-track-event-directive/compare/v1.3.0...v1.3.1) (2026-05-06)
+
+
+### Bug Fixes
+
+* github pages build ([#7](https://github.com/nikhilrajnair/ng-track-event-directive/issues/7)) ([ff864e7](https://github.com/nikhilrajnair/ng-track-event-directive/commit/ff864e7ba23d90cc65c487434c06e39d26349f1b))
+
 # [1.3.0](https://github.com/nikhilrajnair/ng-track-event-directive/compare/v1.2.0...v1.3.0) (2026-05-06)
 
 
