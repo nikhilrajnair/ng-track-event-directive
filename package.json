@@ -6,7 +6,7 @@
     "build": "ng build tracking",
     "demo:start": "ng serve demo-app",
     "demo:build": "ng build demo-app --configuration production",
-    "demo:build:pages": "ng build demo-app --configuration production --output-path docs --base-href /ng-track-event/",
+    "demo:build:pages": "ng build demo-app --configuration production --output-path docs --base-href /ng-track-event-directive/",
     "build:watch": "ng build tracking --watch --configuration development",
     "test": "ng test tracking --watch=false",
     "prettier": "prettier . --check",
