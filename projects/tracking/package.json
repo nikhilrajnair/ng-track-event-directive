@@ -1,15 +1,43 @@
 {
   "name": "ng-track-event-directive",
   "version": "1.0.0",
-  "description": "Reusable Angular directive for declarative tracking events with click, hover, and view triggers.",
+  "description": "Declarative Angular directive for analytics event tracking — click, hover, and viewport-view triggers. Adapter-based: works with Mixpanel, Segment, GA4, or any custom backend.",
   "keywords": [
     "angular",
-    "tracking",
     "directive",
     "analytics",
-    "mixpanel"
+    "event tracking",
+    "click tracking",
+    "hover tracking",
+    "viewport tracking",
+    "view tracking",
+    "track events",
+    "angular analytics",
+    "angular event tracking",
+    "angular click tracking",
+    "angular mixpanel",
+    "angular segment",
+    "angular ga4",
+    "angular google analytics",
+    "mixpanel",
+    "segment",
+    "ga4",
+    "intersection observer",
+    "standalone directive",
+    "declarative analytics",
+    "angular standalone",
+    "angular 21",
+    "ng-track"
   ],
   "license": "MIT",
+  "homepage": "https://nikhilrajnair.github.io/ng-track-event-directive/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nikhilrajnair/ng-track-event-directive.git"
+  },
+  "bugs": {
+    "url": "https://github.com/nikhilrajnair/ng-track-event-directive/issues"
+  },
   "peerDependencies": {
     "@angular/common": "^21.2.0",
     "@angular/core": "^21.2.0"

@@ -1,6 +1,6 @@
 # ng-track-event-directive
 
-Declarative Angular analytics tracking with a standalone directive and typed helpers. Works with any analytics backend — Mixpanel, Segment, GA4, or your own.
+Declarative Angular directive for analytics event tracking — track click, hover, and viewport-view events from HTML templates with zero boilerplate. Works with any analytics backend: Mixpanel, Segment, GA4, or your own custom backend.
 
 ---
 
@@ -12,14 +12,19 @@ npm install ng-track-event-directive
 
 **Peer dependencies:** `@angular/core` and `@angular/common` v21.2+
 
+> Supports Angular 21.2+. Compatible with standalone components and NgModule apps.
+
 ---
 
-## Why this library
+## Why ng-track-event-directive?
 
-- Keeps event wiring close to UI markup — no imperative listeners in component logic.
-- Infers the trigger (`click`, `hover`, `view`) automatically from the event name suffix.
-- Works with any analytics backend through a small adapter interface.
-- Safely no-ops when no adapter is provided.
+- **Track click events in Angular** — attach a `[trackEvent]` binding to any element; no `HostListener` or manual wiring needed.
+- **Track viewport views in Angular** — use the `:viewed` suffix and an `IntersectionObserver` fires automatically when the element enters the viewport.
+- **Track hover events in Angular** — use the `:hovered` suffix to fire on `mouseenter`.
+- **Angular Mixpanel directive** — drop in the Mixpanel adapter and all events flow to your Mixpanel project.
+- **Angular GA4 / Segment integration** — implement one `TrackingAdapter` method and any backend works.
+- Trigger inference from event name suffixes keeps templates readable and consistent.
+- Safely no-ops when no adapter is provided — safe to add before your analytics SDK is wired up.
 
 ---
 
@@ -135,6 +140,8 @@ trackConfig('promo:viewed', { campaign: 'summer' }, false);
 
 ## Mixpanel Example
 
+Angular Mixpanel directive — connect the directive to Mixpanel in minutes:
+
 ```bash
 npm install mixpanel-browser
 ```
@@ -162,6 +169,64 @@ export const appConfig: ApplicationConfig = {
 ```
 
 Verify events in your browser console first, then in Mixpanel **Events > Live View**.
+
+---
+
+## GA4 Example (Angular Google Analytics event tracking)
+
+Track events to Google Analytics 4 using `gtag`:
+
+```ts
+// ga4-adapter.ts
+import { TrackingAdapter } from 'ng-track-event-directive';
+
+declare function gtag(...args: unknown[]): void;
+
+export const ga4Adapter: TrackingAdapter = {
+  track(eventName: string, data?: unknown): void {
+    gtag('event', eventName, (data ?? {}) as Record<string, unknown>);
+  },
+};
+```
+
+```ts
+// app.config.ts
+import { provideTrackingAdapter } from 'ng-track-event-directive';
+import { ga4Adapter } from './ga4-adapter';
+
+export const appConfig = {
+  providers: [provideTrackingAdapter(ga4Adapter)],
+};
+```
+
+---
+
+## Segment Example (Angular Segment event tracking)
+
+Track events via the Segment Analytics.js browser SDK:
+
+```ts
+// segment-adapter.ts
+import { TrackingAdapter } from 'ng-track-event-directive';
+
+declare const analytics: { track(event: string, properties?: object): void };
+
+export const segmentAdapter: TrackingAdapter = {
+  track(eventName: string, data?: unknown): void {
+    analytics.track(eventName, (data ?? {}) as object);
+  },
+};
+```
+
+```ts
+// app.config.ts
+import { provideTrackingAdapter } from 'ng-track-event-directive';
+import { segmentAdapter } from './segment-adapter';
+
+export const appConfig = {
+  providers: [provideTrackingAdapter(segmentAdapter)],
+};
+```
 
 ---
 
