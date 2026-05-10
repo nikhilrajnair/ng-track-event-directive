@@ -1,0 +1,16 @@
+:root {
+  --vp-c-brand-1: #0d9488;
+  --vp-c-brand-2: #14b8a6;
+  --vp-c-brand-3: #0f766e;
+}
+
+.VPHero .text {
+  background: linear-gradient(90deg, #0f766e 0%, #0ea5e9 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.VPNavBarTitle .title {
+  letter-spacing: 0.01em;
+}
