@@ -12,6 +12,38 @@ npm install ng-track-event-directive
 
 **Peer dependencies:** `@angular/core` and `@angular/common` v21.2+
 
+## Documentation Site
+
+This repository now uses VitePress for docs authoring and static site output.
+
+```bash
+npm run docs:dev
+```
+
+Build docs to `docs/`:
+
+```bash
+npm run docs:build
+```
+
+Build docs for GitHub Pages base path (`/ng-track-event-directive/`):
+
+```bash
+npm run docs:build:pages
+```
+
+## Demo App
+
+Try the demo quickly in StackBlitz:
+
+- https://stackblitz.com/github/nikhilrajnair/ng-track-event?file=projects/demo-app/src/app/app.ts
+
+Run the demo locally:
+
+```bash
+npm run demo:start
+```
+
 ---
 
 ## Quick Start

@@ -4,9 +4,12 @@
   "scripts": {
     "ng": "ng",
     "build": "ng build tracking",
+    "docs:dev": "vitepress dev docs-src",
+    "docs:build": "vitepress build docs-src",
+    "docs:build:pages": "VITEPRESS_BASE=/ng-track-event-directive/ vitepress build docs-src",
+    "docs:preview": "vitepress preview docs-src",
     "demo:start": "ng serve demo-app",
     "demo:build": "ng build demo-app --configuration production",
-    "demo:build:pages": "ng build demo-app --configuration production --output-path docs --base-href /ng-track-event-directive/",
     "build:watch": "ng build tracking --watch --configuration development",
     "test": "ng test tracking --watch=false",
     "prettier": "prettier . --check",
@@ -32,7 +35,7 @@
     "tslib": "^2.3.0"
   },
   "devDependencies": {
-    "@angular/build": "^21.2.6",
+    "@angular/build": "^21.2.10",
     "@angular/cli": "^21.2.6",
     "@angular/compiler-cli": "^21.2.0",
     "@semantic-release/changelog": "^6.0.3",
@@ -47,6 +50,7 @@
     "semantic-release": "^24.2.9",
     "tailwindcss": "^4.2.4",
     "typescript": "~5.9.2",
-    "vitest": "^4.0.8"
+    "vitepress": "^1.6.4",
+    "vitest": "^4.1.5"
   }
 }
