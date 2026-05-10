@@ -25,11 +25,11 @@ import { provideTrackingAdapter, type TrackingAdapter } from 'ng-track-event-dir
 const myAdapter: TrackingAdapter = {
   track(eventName, data) {
     console.log('[analytics]', eventName, data);
-  }
+  },
 };
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideTrackingAdapter(myAdapter)]
+  providers: [provideTrackingAdapter(myAdapter)],
 };
 ```
 
@@ -46,10 +46,8 @@ import { TrackEventDirective, trackConfig } from 'ng-track-event-directive';
   selector: 'app-root',
   imports: [TrackEventDirective],
   template: `
-    <button [trackEvent]="trackConfig('signup:clicked', { source: 'hero' })">
-      Sign Up
-    </button>
-  `
+    <button [trackEvent]="trackConfig('signup:clicked', { source: 'hero' })">Sign Up</button>
+  `,
 })
 export class AppComponent {
   protected readonly trackConfig = trackConfig;

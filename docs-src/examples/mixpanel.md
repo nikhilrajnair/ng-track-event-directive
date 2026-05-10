@@ -15,17 +15,17 @@ import { provideTrackingAdapter, type TrackingAdapter } from 'ng-track-event-dir
 
 mixpanel.init('YOUR_MIXPANEL_PROJECT_TOKEN', {
   track_pageview: true,
-  persistence: 'localStorage'
+  persistence: 'localStorage',
 });
 
 const mixpanelAdapter: TrackingAdapter = {
   track(eventName, data) {
     mixpanel.track(eventName, (data ?? {}) as Record<string, unknown>);
-  }
+  },
 };
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideTrackingAdapter(mixpanelAdapter)]
+  providers: [provideTrackingAdapter(mixpanelAdapter)],
 };
 ```
 

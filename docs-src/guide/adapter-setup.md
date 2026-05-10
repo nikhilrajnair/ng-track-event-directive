@@ -16,7 +16,7 @@ interface TrackingAdapter {
 import { provideTrackingAdapter } from 'ng-track-event-directive';
 
 export const appConfig = {
-  providers: [provideTrackingAdapter(myAdapter)]
+  providers: [provideTrackingAdapter(myAdapter)],
 };
 ```
 

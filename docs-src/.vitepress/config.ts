@@ -12,7 +12,7 @@ export default {
       { text: 'Guide', link: '/getting-started' },
       { text: 'API', link: '/api/' },
       { text: 'Examples', link: '/examples/mixpanel' },
-      { text: 'Demo', link: '/demo' }
+      { text: 'Demo', link: '/demo' },
     ],
     sidebar: [
       {
@@ -20,25 +20,25 @@ export default {
         items: [
           { text: 'Getting Started', link: '/getting-started' },
           { text: 'Adapter Setup', link: '/guide/adapter-setup' },
-          { text: 'Events and Triggers', link: '/guide/events-and-triggers' }
-        ]
+          { text: 'Events and Triggers', link: '/guide/events-and-triggers' },
+        ],
       },
       {
         text: 'API',
-        items: [{ text: 'API Reference', link: '/api/' }]
+        items: [{ text: 'API Reference', link: '/api/' }],
       },
       {
         text: 'Examples',
-        items: [{ text: 'Mixpanel', link: '/examples/mixpanel' }]
+        items: [{ text: 'Mixpanel', link: '/examples/mixpanel' }],
       },
       {
         text: 'Demo',
-        items: [{ text: 'Try The Demo', link: '/demo' }]
-      }
+        items: [{ text: 'Try The Demo', link: '/demo' }],
+      },
     ],
     search: {
-      provider: 'local'
+      provider: 'local',
     },
-    socialLinks: [{ icon: 'github', link: 'https://github.com/nikhilrajnair/ng-track-event' }]
-  }
+    socialLinks: [{ icon: 'github', link: 'https://github.com/nikhilrajnair/ng-track-event' }],
+  },
 };

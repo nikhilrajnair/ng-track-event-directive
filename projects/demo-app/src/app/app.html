@@ -1,6 +1,5 @@
 <main class="min-h-screen bg-gray-50 font-sans text-gray-800 p-8">
   <div class="mx-auto max-w-2xl">
-
     <header class="mb-8">
       <h1 class="text-2xl font-bold text-teal-700">ng-track-event — local dev harness</h1>
       <p class="mt-1 text-sm text-gray-500">
@@ -11,7 +10,6 @@
 
     <!-- Click + Hover cards -->
     <div class="grid gap-4 sm:grid-cols-2">
-
       <div class="rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
         <h2 class="font-semibold">:clicked</h2>
         <p class="mt-1 text-xs text-gray-500">Fires on every click.</p>
@@ -34,18 +32,13 @@
           Hover here
         </div>
       </div>
-
     </div>
 
     <!-- Event log -->
     <section class="mt-8">
       <div class="mb-2 flex items-center justify-between">
         <h2 class="font-semibold text-gray-700">Event log</h2>
-        <button
-          type="button"
-          class="text-xs text-gray-400 hover:text-red-500"
-          (click)="clearLog()"
-        >
+        <button type="button" class="text-xs text-gray-400 hover:text-red-500" (click)="clearLog()">
           Clear
         </button>
       </div>
@@ -80,6 +73,5 @@
         ↓ Scroll this into view to fire :viewed
       </div>
     </div>
-
   </div>
 </main>

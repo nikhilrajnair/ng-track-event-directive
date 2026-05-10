@@ -27,10 +27,12 @@ export const mixpanelLiveAdapter: TrackingAdapter = {
     const payload = (data ?? {}) as Record<string, unknown>;
 
     console.info('[ng-track-event demo]', { eventName, payload, mixpanelConnected });
-    devLog.update((log) => [
-      { name: eventName, data: Object.keys(payload).length ? JSON.stringify(payload) : '' },
-      ...log,
-    ].slice(0, 20));
+    devLog.update((log) =>
+      [
+        { name: eventName, data: Object.keys(payload).length ? JSON.stringify(payload) : '' },
+        ...log,
+      ].slice(0, 20),
+    );
 
     if (!mixpanelConnected) {
       return;
