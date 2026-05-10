@@ -2,11 +2,11 @@
 
 Trigger behavior is inferred from the event name suffix.
 
-| Event suffix | Trigger              | Default `once` |
-| ------------ | -------------------- | -------------- |
-| `:clicked`   | click                | false          |
-| `:hovered`   | mouseenter           | false          |
-| `:viewed`    | IntersectionObserver | true           |
+| Event suffix | Trigger | Default `once` |
+| --- | --- | --- |
+| `:clicked` | click | false |
+| `:hovered` | mouseenter | false |
+| `:viewed` | IntersectionObserver | true |
 
 ## Examples
 
