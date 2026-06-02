@@ -174,9 +174,15 @@ describe('TrackEventDirective', () => {
     console.log('instances after setup:', MockIntersectionObserver.instances.length);
     fixture.componentInstance.config.set({ event: 'table:clicked' });
     fixture.detectChanges();
-    console.log('after 1st detectChanges, disconnect called:', (observer.disconnect as ReturnType<typeof vi.fn>).mock.calls.length);
+    console.log(
+      'after 1st detectChanges, disconnect called:',
+      (observer.disconnect as ReturnType<typeof vi.fn>).mock.calls.length,
+    );
     fixture.detectChanges();
-    console.log('after 2nd detectChanges, disconnect called:', (observer.disconnect as ReturnType<typeof vi.fn>).mock.calls.length);
+    console.log(
+      'after 2nd detectChanges, disconnect called:',
+      (observer.disconnect as ReturnType<typeof vi.fn>).mock.calls.length,
+    );
 
     expect(observer.disconnect).toHaveBeenCalled();
     expect(trackSpy).not.toHaveBeenCalled();

@@ -25,11 +25,11 @@ import { provideTrackingAdapter, type TrackingAdapter } from 'ng-track-event-dir
 const myAdapter: TrackingAdapter = {
   track(eventName, data) {
     console.log('[analytics]', eventName, data);
-  }
+  },
 };
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideTrackingAdapter(myAdapter)]
+  providers: [provideTrackingAdapter(myAdapter)],
 };
 ```
 
