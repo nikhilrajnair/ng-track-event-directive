@@ -10,6 +10,7 @@
 /docs
 /docs-src/.vitepress/dist
 /docs-src/.vitepress/cache
+/.vitepress/
 
 # Node
 /node_modules
