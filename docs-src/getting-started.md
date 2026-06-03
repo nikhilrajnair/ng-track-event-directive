@@ -46,10 +46,8 @@ import { TrackEventDirective, trackConfig } from 'ng-track-event-directive';
   selector: 'app-root',
   imports: [TrackEventDirective],
   template: `
-    <button [trackEvent]="trackConfig('signup:clicked', { source: 'hero' })">
-      Sign Up
-    </button>
-  `
+    <button [trackEvent]="trackConfig('signup:clicked', { source: 'hero' })">Sign Up</button>
+  `,
 })
 export class AppComponent {
   protected readonly trackConfig = trackConfig;
