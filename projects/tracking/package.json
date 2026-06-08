@@ -1,6 +1,6 @@
 {
   "name": "ng-track-event-directive",
-  "version": "1.0.0",
+  "version": "1.3.2",
   "description": "Declarative Angular directive for analytics event tracking — click, hover, and viewport-view triggers. Adapter-based: works with Mixpanel, Segment, GA4, or any custom backend.",
   "keywords": [
     "angular",
