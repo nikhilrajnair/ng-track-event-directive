@@ -12,10 +12,10 @@ Use this for the fastest way to try the directive in a live environment.
 
 Use this when you want to inspect implementation details.
 
-- App bootstrap: [main.ts](https://github.com/nikhilrajnair/ng-track-event/blob/main/projects/demo-app/src/main.ts)
-- App config: [app.config.ts](https://github.com/nikhilrajnair/ng-track-event/blob/main/projects/demo-app/src/app/app.config.ts)
-- Directive usage: [app.ts](https://github.com/nikhilrajnair/ng-track-event/blob/main/projects/demo-app/src/app/app.ts)
-- Demo UI: [app.html](https://github.com/nikhilrajnair/ng-track-event/blob/main/projects/demo-app/src/app/app.html)
+- App bootstrap: [main.ts](https://github.com/nikhilrajnair/ng-track-event-directive/blob/main/projects/demo-app/src/main.ts)
+- App config: [app.config.ts](https://github.com/nikhilrajnair/ng-track-event-directive/blob/main/projects/demo-app/src/app/app.config.ts)
+- Directive usage: [app.ts](https://github.com/nikhilrajnair/ng-track-event-directive/blob/main/projects/demo-app/src/app/app.ts)
+- Demo UI: [app.html](https://github.com/nikhilrajnair/ng-track-event-directive/blob/main/projects/demo-app/src/app/app.html)
 
 ## 3. Run locally
 

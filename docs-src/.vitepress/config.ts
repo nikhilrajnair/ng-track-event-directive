@@ -39,6 +39,8 @@ export default {
     search: {
       provider: 'local',
     },
-    socialLinks: [{ icon: 'github', link: 'https://github.com/nikhilrajnair/ng-track-event' }],
+    socialLinks: [
+      { icon: 'github', link: 'https://github.com/nikhilrajnair/ng-track-event-directive' },
+    ],
   },
 };

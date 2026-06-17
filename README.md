@@ -36,7 +36,7 @@ npm run docs:build:pages
 
 Try the demo quickly in StackBlitz:
 
-- https://stackblitz.com/github/nikhilrajnair/ng-track-event?file=projects/demo-app/src/app/app.ts
+- https://stackblitz.com/edit/stackblitz-starters-hsdpibzj?file=package.json
 
 Run the demo locally:
 
