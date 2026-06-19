@@ -21,6 +21,6 @@ features:
     details: Use event suffixes like :clicked, :hovered, and :viewed to infer trigger behavior automatically.
   - title: Adapter-Based by Design
     details: Keep your analytics provider choice flexible with a tiny TrackingAdapter interface.
-  - title: Built for Angular 21+
+  - title: Built for Angular 22
     details: Works naturally with standalone components and modern Angular app configuration.
 ---
