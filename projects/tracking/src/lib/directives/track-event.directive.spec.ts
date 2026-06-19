@@ -138,6 +138,15 @@ describe('TrackEventDirective', () => {
     expect(trackSpy).toHaveBeenCalledTimes(1);
   });
 
+  it('does not track events with an unknown suffix', () => {
+    const { el, trackSpy } = setup({ event: 'dialog:opened' });
+
+    el.nativeElement.click();
+    el.nativeElement.dispatchEvent(new MouseEvent('mouseenter'));
+
+    expect(trackSpy).not.toHaveBeenCalled();
+  });
+
   it('disconnects the observer on destroy', () => {
     const { fixture } = setup({ event: 'table:viewed' });
 

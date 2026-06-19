@@ -32,6 +32,18 @@
           Hover here
         </div>
       </div>
+
+      <div class="rounded-xl border border-gray-200 bg-white p-5 shadow-sm sm:col-span-2">
+        <h2 class="font-semibold">:clicked with once override</h2>
+        <p class="mt-1 text-xs text-gray-500">Fires only once, even when clicked multiple times.</p>
+        <button
+          type="button"
+          class="mt-4 w-full rounded-lg bg-teal-600 px-4 py-2 text-sm font-medium text-white hover:bg-teal-700"
+          [trackEvent]="trackConfig('demo-once-button:clicked', { source: 'dev-harness' }, true)"
+        >
+          Click me more than once
+        </button>
+      </div>
     </div>
 
     <!-- Event log -->

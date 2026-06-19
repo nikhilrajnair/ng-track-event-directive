@@ -8,6 +8,12 @@ A lightweight Angular directive for declarative click, hover, and viewport event
 npm install ng-track-event-directive
 ```
 
+## Compatibility
+
+| Package version | Angular support | Node support                        |
+| --------------- | --------------- | ----------------------------------- |
+| 1.x             | Angular 22      | ^22.22.3 \|\| ^24.15.0 \|\| ^26.0.0 |
+
 ## Quick Start
 
 ### Register an adapter
@@ -82,6 +88,8 @@ If no adapter is registered, tracking calls are safely ignored.
 - [Getting started](https://nikhilrajnair.github.io/ng-track-event-directive/getting-started)
 - [Demo](https://nikhilrajnair.github.io/ng-track-event-directive/demo)
 - [Open in StackBlitz](https://stackblitz.com/edit/stackblitz-starters-hsdpibzj?file=package.json)
+
+If the production demo build crashes locally on macOS ARM64 or Node 24 because of Angular local cache or LMDB native cache issues, use `npm run demo:build:safe`. It uses `CI=1` for the demo build and does not indicate a directive runtime issue.
 
 ## API Overview
 
