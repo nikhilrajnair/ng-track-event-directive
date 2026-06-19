@@ -1,8 +1,6 @@
 # ng-track-event-directive
 
-A lightweight Angular directive for declarative analytics event tracking with `click`, `hover`, and `view` triggers. Bring your own adapter — Mixpanel, Segment, GA4, or any custom backend.
-
----
+A lightweight Angular directive for declarative click, hover, and viewport event tracking with any analytics provider.
 
 ## Install
 
@@ -10,88 +8,39 @@ A lightweight Angular directive for declarative analytics event tracking with `c
 npm install ng-track-event-directive
 ```
 
-**Peer dependencies:** `@angular/core` and `@angular/common` v21.2+
-
-## Documentation Site
-
-This repository now uses VitePress for docs authoring and static site output.
-
-```bash
-npm run docs:dev
-```
-
-Build docs to `docs/`:
-
-```bash
-npm run docs:build
-```
-
-Build docs for GitHub Pages base path (`/ng-track-event-directive/`):
-
-```bash
-npm run docs:build:pages
-```
-
-## Demo App
-
-Try the demo quickly in StackBlitz:
-
-- https://stackblitz.com/edit/stackblitz-starters-hsdpibzj?file=package.json
-
-Run the demo locally:
-
-```bash
-npm run demo:start
-```
-
----
-
 ## Quick Start
 
-### 1. Implement a `TrackingAdapter`
-
-`TrackingAdapter` is a one-method interface that bridges the directive to your analytics SDK:
-
-```ts
-interface TrackingAdapter {
-  track(eventName: string, data?: unknown): void;
-}
-```
-
-Create your adapter and register it in `app.config.ts`:
+### Register an adapter
 
 ```ts
 // app.config.ts
 import { ApplicationConfig } from '@angular/core';
-import { provideTrackingAdapter, TrackingAdapter } from 'ng-track-event-directive';
+import { provideTrackingAdapter, type TrackingAdapter } from 'ng-track-event-directive';
 
-const myAdapter: TrackingAdapter = {
+const trackingAdapter: TrackingAdapter = {
   track(eventName, data) {
     console.log('[analytics]', eventName, data);
-    // swap for: mixpanel.track(eventName, data), analytics.track(eventName, data), etc.
   },
 };
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideTrackingAdapter(myAdapter)],
+  providers: [provideTrackingAdapter(trackingAdapter)],
 };
 ```
 
-> For NgModule apps, add `provideTrackingAdapter(myAdapter)` to the `providers` array in your root `AppModule`.
-
-### 2. Add the directive to your component
+### Import and use the directive
 
 ```ts
+// app.component.ts
 import { Component } from '@angular/core';
 import { TrackEventDirective, trackConfig } from 'ng-track-event-directive';
 
 @Component({
   selector: 'app-root',
+  standalone: true,
   imports: [TrackEventDirective],
   template: `
-    <button [trackEvent]="trackConfig('signup:clicked', { source: 'hero' })">Sign Up</button>
-    <section [trackEvent]="trackConfig('pricing:viewed')">Pricing</section>
-    <div [trackEvent]="trackConfig('tooltip:hovered', { id: 'help' })">Hover me</div>
+    <button [trackEvent]="trackConfig('signup:clicked', { source: 'hero' })">Sign up</button>
   `,
 })
 export class AppComponent {
@@ -99,56 +48,25 @@ export class AppComponent {
 }
 ```
 
----
+## Event Suffixes
 
-## Event Triggers
+The event-name suffix selects the trigger automatically.
 
-The trigger is inferred automatically from the **suffix** of the event name:
+| Suffix     | Trigger                           | Default `once` |
+| ---------- | --------------------------------- | -------------- |
+| `:clicked` | click                             | `false`        |
+| `:hovered` | mouse enter                       | `false`        |
+| `:viewed`  | viewport (`IntersectionObserver`) | `true`         |
 
-| Event name suffix | Trigger                       | Default `once` |
-| ----------------- | ----------------------------- | -------------- |
-| `:clicked`        | `click`                       | `false`        |
-| `:hovered`        | `hover` (`mouseenter`)        | `false`        |
-| `:viewed`         | `view` (IntersectionObserver) | `true`         |
-
-```html
-<!-- Fires on every click -->
-<button [trackEvent]="trackConfig('add-to-cart:clicked', { productId: 42 })">Add to Cart</button>
-
-<!-- Fires once when the element first enters the viewport -->
-<section [trackEvent]="trackConfig('hero-banner:viewed')">Hero Banner</section>
-
-<!-- Fires on every mouse-enter -->
-<div [trackEvent]="trackConfig('tooltip:hovered', { tooltip: 'help' })">Hover me</div>
-```
-
----
-
-## `TrackConfig`
+Override the default when needed:
 
 ```ts
-interface TrackConfig<E extends string = string, D = unknown> {
-  event: E; // Required. Event name — suffix determines the trigger.
-  data?: D; // Optional. Arbitrary payload forwarded to the adapter.
-  once?: boolean; // Optional. Override the default fire-once behaviour.
-}
+trackConfig('promo:viewed', { campaign: 'summer' }, false);
 ```
 
-Use the `trackConfig` helper for a typed, concise factory:
+## Adapter Concept
 
-```ts
-import { trackConfig } from 'ng-track-event-directive';
-
-trackConfig('hero:viewed');
-trackConfig('add-to-cart:clicked', { productId: 42 });
-trackConfig('promo:viewed', { campaign: 'summer' }, false); // override once → false
-```
-
----
-
-## `TrackingAdapter` interface
-
-Implement this interface to connect the directive to any analytics SDK:
+The package is analytics-provider agnostic. Connect your provider through one small interface:
 
 ```ts
 interface TrackingAdapter {
@@ -156,59 +74,28 @@ interface TrackingAdapter {
 }
 ```
 
-If no adapter is registered, all tracking calls are silently ignored.
+If no adapter is registered, tracking calls are safely ignored.
 
----
+## Demo and Documentation
 
-## Mixpanel Example
+- [Documentation](https://nikhilrajnair.github.io/ng-track-event-directive/)
+- [Getting started](https://nikhilrajnair.github.io/ng-track-event-directive/getting-started)
+- [Demo](https://nikhilrajnair.github.io/ng-track-event-directive/demo)
+- [Open in StackBlitz](https://stackblitz.com/edit/stackblitz-starters-hsdpibzj?file=package.json)
 
-```bash
-npm install mixpanel-browser
-```
+## API Overview
 
-```ts
-// app.config.ts
-import { ApplicationConfig } from '@angular/core';
-import mixpanel from 'mixpanel-browser';
-import { provideTrackingAdapter, TrackingAdapter } from 'ng-track-event-directive';
+- `TrackEventDirective` — attaches tracking behavior to an element
+- `trackConfig` — creates a typed event configuration
+- `provideTrackingAdapter` — registers an analytics adapter
+- `TRACKING_ADAPTER` — adapter injection token
+- `parseTriggerFromEvent` — resolves a trigger from an event suffix
+- `TrackConfig`, `TrackTrigger`, `TrackingAdapter` — public types
 
-mixpanel.init('YOUR_MIXPANEL_PROJECT_TOKEN', {
-  track_pageview: true,
-  persistence: 'localStorage',
-});
-
-const mixpanelAdapter: TrackingAdapter = {
-  track(eventName, data) {
-    mixpanel.track(eventName, (data ?? {}) as Record<string, unknown>);
-  },
-};
-
-export const appConfig: ApplicationConfig = {
-  providers: [provideTrackingAdapter(mixpanelAdapter)],
-};
-```
-
-Verify events in your browser console first, then in Mixpanel **Events > Live View**.
-
----
-
-## API Reference
-
-| Symbol                   | Kind           | Description                                      |
-| ------------------------ | -------------- | ------------------------------------------------ |
-| `TrackEventDirective`    | Directive      | Core directive. Selector: `[trackEvent]`.        |
-| `trackConfig`            | Function       | Type-safe `TrackConfig` factory.                 |
-| `provideTrackingAdapter` | Function       | Registers an adapter via DI.                     |
-| `TRACKING_ADAPTER`       | InjectionToken | Token used to inject a custom adapter.           |
-| `parseTriggerFromEvent`  | Function       | Parses a `TrackTrigger` from an event string.    |
-| `TrackConfig`            | Type           | Configuration interface for the directive input. |
-| `TrackTrigger`           | Type           | `'click' \| 'view' \| 'hover' \| 'unknown'`      |
-| `TrackingAdapter`        | Type           | Interface for custom adapter implementations.    |
-
----
+See the [full API reference](https://nikhilrajnair.github.io/ng-track-event-directive/api/).
 
 ## Notes
 
-- `:viewed` requires `IntersectionObserver` support (all modern browsers).
-- If no adapter is registered, all tracking calls are silently ignored.
-- This package follows semantic versioning — see [CHANGELOG.md](./CHANGELOG.md) for release history.
+- Requires Angular 22.
+- `:viewed` requires `IntersectionObserver` support.
+- See the [changelog](./CHANGELOG.md) for releases and migrations.

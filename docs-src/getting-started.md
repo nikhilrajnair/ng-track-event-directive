@@ -1,57 +1,64 @@
 # Getting Started
 
-## Install
+Add declarative analytics tracking to a standalone Angular component in three steps.
+
+## 1. Install
 
 ```bash
 npm install ng-track-event-directive
 ```
 
-Peer dependencies:
+The package requires `@angular/core` and `@angular/common` v22.
 
-- `@angular/core` v21.2+
-- `@angular/common` v21.2+
+## 2. Register an adapter
 
-## Register an adapter
-
-Create a tracking adapter and provide it at app startup.
-
-For standalone Angular apps, this is typically done in `app.config.ts`.
-In this repository's demo app, the file is `projects/demo-app/src/app/app.config.ts`.
+Create an adapter that sends events to your analytics provider, then register it at application startup.
 
 ```ts
+// app.config.ts
 import { ApplicationConfig } from '@angular/core';
 import { provideTrackingAdapter, type TrackingAdapter } from 'ng-track-event-directive';
 
-const myAdapter: TrackingAdapter = {
+const trackingAdapter: TrackingAdapter = {
   track(eventName, data) {
     console.log('[analytics]', eventName, data);
   },
 };
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideTrackingAdapter(myAdapter)],
+  providers: [provideTrackingAdapter(trackingAdapter)],
 };
 ```
 
-## Use the directive
+The console adapter is enough to verify the setup. Replace it with your provider adapter when you are ready.
 
-Use the directive in the component where you want tracking behavior.
-In this repository's demo app, that is `projects/demo-app/src/app/app.ts`.
+## 3. Use the directive
+
+Import `TrackEventDirective` into the component and expose `trackConfig` to its template.
 
 ```ts
+// app.ts
 import { Component } from '@angular/core';
 import { TrackEventDirective, trackConfig } from 'ng-track-event-directive';
 
 @Component({
   selector: 'app-root',
+  standalone: true,
   imports: [TrackEventDirective],
   template: `
-    <button [trackEvent]="trackConfig('signup:clicked', { source: 'hero' })">Sign Up</button>
+    <button [trackEvent]="trackConfig('signup:clicked', { source: 'hero' })">Sign up</button>
   `,
 })
-export class AppComponent {
+export class App {
   protected readonly trackConfig = trackConfig;
 }
 ```
 
-Continue with [Adapter Setup](/guide/adapter-setup), [Events and Triggers](/guide/events-and-triggers), and [Demo](/demo).
+Clicking the button calls `trackingAdapter.track('signup:clicked', { source: 'hero' })`.
+
+## Next steps
+
+- Connect an analytics provider in [Adapter Setup](/guide/adapter-setup).
+- Learn the suffix and `once` rules in [Events and Triggers](/guide/events-and-triggers).
+- Browse every public export in the [API Reference](/api/).
+- Try the package interactively in the [Demo](/demo).

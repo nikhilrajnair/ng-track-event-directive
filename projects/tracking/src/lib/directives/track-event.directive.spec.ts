@@ -53,7 +53,6 @@ function setup(config?: TrackConfig<string, unknown>) {
     fixture,
     el,
     adapter,
-    // #15: vi.mocked() provides correct Mock type without a manual cast.
     trackSpy: vi.mocked(adapter.track),
   };
 }
@@ -148,7 +147,6 @@ describe('TrackEventDirective', () => {
     expect(observer.disconnect).toHaveBeenCalled();
   });
 
-  // #12: null adapter — documented graceful no-op.
   it('does not throw when no adapter is provided', () => {
     TestBed.configureTestingModule({ imports: [HostComponent] });
     const fixture = TestBed.createComponent(HostComponent);
@@ -158,7 +156,6 @@ describe('TrackEventDirective', () => {
     expect(() => el.nativeElement.click()).not.toThrow();
   });
 
-  // #13: SSR guard — IntersectionObserver unavailable.
   it('does not create an observer when IntersectionObserver is unavailable', () => {
     vi.stubGlobal('IntersectionObserver', undefined);
 
@@ -167,23 +164,13 @@ describe('TrackEventDirective', () => {
     expect(MockIntersectionObserver.instances).toHaveLength(0);
   });
 
-  // #3/#4: observer torn down and hasFired reset when trackEvent changes.
   it('tears down the observer and resets state when trigger changes from view to click', () => {
     const { fixture, trackSpy } = setup({ event: 'table:viewed' });
 
     const [observer] = MockIntersectionObserver.instances;
-    console.log('instances after setup:', MockIntersectionObserver.instances.length);
     fixture.componentInstance.config.set({ event: 'table:clicked' });
     fixture.detectChanges();
-    console.log(
-      'after 1st detectChanges, disconnect called:',
-      (observer.disconnect as ReturnType<typeof vi.fn>).mock.calls.length,
-    );
     fixture.detectChanges();
-    console.log(
-      'after 2nd detectChanges, disconnect called:',
-      (observer.disconnect as ReturnType<typeof vi.fn>).mock.calls.length,
-    );
 
     expect(observer.disconnect).toHaveBeenCalled();
     expect(trackSpy).not.toHaveBeenCalled();
@@ -207,8 +194,7 @@ describe('TrackEventDirective', () => {
     expect(trackSpy).toHaveBeenCalledTimes(2);
   });
 
-  // #4: firedEventKey signal is keyed by event name — no effect flush needed because
-  // sendOnce() reads trackEvent() synchronously at click time.
+  // sendOnce reads the updated input synchronously at click time.
   it('resets hasFired so the new event fires after trackEvent config changes', () => {
     const { el, fixture, trackSpy } = setup({ event: 'save:clicked', once: true });
 
