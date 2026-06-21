@@ -73,7 +73,10 @@
         Fires once when this element enters the viewport (IntersectionObserver). Scroll down to
         trigger it.
       </p>
-      <div class="view-zone" [trackEvent]="trackConfig('demo-section:viewed', { source: 'dev-harness' })">
+      <div
+        class="view-zone"
+        [trackEvent]="trackConfig('demo-section:viewed', { source: 'dev-harness' })"
+      >
         Scroll this into view to fire :viewed
       </div>
     </section>
