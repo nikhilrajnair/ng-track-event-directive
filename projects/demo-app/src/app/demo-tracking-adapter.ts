@@ -22,7 +22,7 @@ if (mixpanelConnected) {
   });
 }
 
-export const mixpanelLiveAdapter: TrackingAdapter = {
+export const demoTrackingAdapter: TrackingAdapter = {
   track(eventName: string, data?: unknown): void {
     const payload = (data ?? {}) as Record<string, unknown>;
 

@@ -1,57 +1,65 @@
-<main class="min-h-screen bg-gray-50 font-sans text-gray-800 p-8">
-  <div class="mx-auto max-w-2xl">
-    <header class="mb-8">
-      <h1 class="text-2xl font-bold text-teal-700">ng-track-event — local dev harness</h1>
-      <p class="mt-1 text-sm text-gray-500">
+<main class="page">
+  <div class="shell">
+    <header class="hero">
+      <h1>ng-track-event - local dev harness</h1>
+      <p>
         Interact with the cards below and watch events appear in the log. Open DevTools to see
         adapter output as well.
       </p>
     </header>
 
-    <!-- Click + Hover cards -->
-    <div class="grid gap-4 sm:grid-cols-2">
-      <div class="rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
-        <h2 class="font-semibold">:clicked</h2>
-        <p class="mt-1 text-xs text-gray-500">Fires on every click.</p>
+    <div class="cards">
+      <section class="card">
+        <h2>:clicked</h2>
+        <p>Fires on every click.</p>
         <button
           type="button"
-          class="mt-4 w-full rounded-lg bg-teal-600 px-4 py-2 text-sm font-medium text-white hover:bg-teal-700"
+          class="primary-button"
           [trackEvent]="trackConfig('demo-button:clicked', { source: 'dev-harness' })"
         >
           Click me
         </button>
-      </div>
+      </section>
 
-      <div class="rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
-        <h2 class="font-semibold">:hovered</h2>
-        <p class="mt-1 text-xs text-gray-500">Fires on mouse enter.</p>
+      <section class="card">
+        <h2>:hovered</h2>
+        <p>Fires on mouse enter.</p>
         <div
-          class="mt-4 grid min-h-[56px] place-items-center rounded-lg border-2 border-dashed border-gray-200 text-sm text-gray-400 hover:border-teal-400 hover:text-teal-600"
+          class="hover-zone"
           [trackEvent]="trackConfig('demo-zone:hovered', { source: 'dev-harness' })"
         >
           Hover here
         </div>
-      </div>
+      </section>
+
+      <section class="card card-wide">
+        <h2>:clicked with once override</h2>
+        <p>Fires only once, even when clicked multiple times.</p>
+        <button
+          type="button"
+          class="primary-button"
+          [trackEvent]="trackConfig('demo-once-button:clicked', { source: 'dev-harness' }, true)"
+        >
+          Click me more than once
+        </button>
+      </section>
     </div>
 
-    <!-- Event log -->
-    <section class="mt-8">
-      <div class="mb-2 flex items-center justify-between">
-        <h2 class="font-semibold text-gray-700">Event log</h2>
-        <button type="button" class="text-xs text-gray-400 hover:text-red-500" (click)="clearLog()">
-          Clear
-        </button>
+    <section class="log-section">
+      <div class="log-header">
+        <h2>Event log</h2>
+        <button type="button" class="clear-button" (click)="clearLog()">Clear</button>
       </div>
 
       @if (log().length === 0) {
-        <p class="text-sm text-gray-400">No events yet — interact with the cards above.</p>
+        <p class="empty-state">No events yet - interact with the cards above.</p>
       } @else {
-        <ol class="space-y-1">
+        <ol class="log-list">
           @for (entry of log(); track $index) {
-            <li class="rounded-lg border border-gray-100 bg-white px-4 py-2 text-sm">
-              <span class="font-mono text-teal-700">{{ entry.name }}</span>
+            <li class="log-item">
+              <span class="event-name">{{ entry.name }}</span>
               @if (entry.data) {
-                <span class="ml-2 text-gray-400">{{ entry.data }}</span>
+                <span class="event-data">{{ entry.data }}</span>
               }
             </li>
           }
@@ -59,19 +67,18 @@
       }
     </section>
 
-    <!-- Viewed card — below the fold so scrolling is required -->
-    <div class="mt-8 rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
-      <h2 class="font-semibold">:viewed</h2>
-      <p class="mt-1 text-xs text-gray-500">
+    <section class="card viewed-card">
+      <h2>:viewed</h2>
+      <p>
         Fires once when this element enters the viewport (IntersectionObserver). Scroll down to
         trigger it.
       </p>
       <div
-        class="mt-4 grid min-h-[120px] place-items-center rounded-lg border-2 border-dashed border-teal-200 bg-teal-50 text-sm font-medium text-teal-600"
+        class="view-zone"
         [trackEvent]="trackConfig('demo-section:viewed', { source: 'dev-harness' })"
       >
-        ↓ Scroll this into view to fire :viewed
+        Scroll this into view to fire :viewed
       </div>
-    </div>
+    </section>
   </div>
 </main>

@@ -13,6 +13,12 @@ Peer dependencies:
 - `@angular/core` v22
 - `@angular/common` v22
 
+## Compatibility
+
+| Package version | Angular support | Node support                        |
+| --------------- | --------------- | ----------------------------------- |
+| 1.x             | Angular 22      | ^22.22.3 \|\| ^24.15.0 \|\| ^26.0.0 |
+
 ## Quick Start
 
 ### Register a `TrackingAdapter`

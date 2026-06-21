@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { TrackEventDirective, trackConfig } from 'ng-track-event-directive';
-import { devLog } from './mixpanel-live-adapter';
+import { devLog } from './demo-tracking-adapter';
 
 @Component({
   selector: 'app-root',

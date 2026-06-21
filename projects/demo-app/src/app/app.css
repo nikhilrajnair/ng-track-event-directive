@@ -1,0 +1,167 @@
+.page {
+  min-height: 100vh;
+  padding: 2rem;
+  background: #f9fafb;
+  color: #1f2937;
+  font-family:
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    sans-serif;
+}
+
+.shell {
+  max-width: 42rem;
+  margin: 0 auto;
+}
+
+.hero {
+  margin-bottom: 2rem;
+}
+
+.hero h1 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #0f766e;
+}
+
+.hero p,
+.card p,
+.empty-state {
+  margin: 0.25rem 0 0;
+  font-size: 0.875rem;
+  color: #6b7280;
+}
+
+.cards {
+  display: grid;
+  gap: 1rem;
+}
+
+.card,
+.viewed-card {
+  padding: 1.25rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 1rem;
+  background: #fff;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+.card-wide {
+  grid-column: 1 / -1;
+}
+
+.card h2,
+.log-header h2 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.primary-button,
+.clear-button {
+  border: 0;
+  cursor: pointer;
+  font: inherit;
+}
+
+.primary-button {
+  display: block;
+  width: 100%;
+  margin-top: 1rem;
+  padding: 0.625rem 1rem;
+  border-radius: 0.5rem;
+  background: #0d9488;
+  color: #fff;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.primary-button:hover {
+  background: #0f766e;
+}
+
+.hover-zone,
+.view-zone {
+  display: grid;
+  place-items: center;
+  margin-top: 1rem;
+  border-radius: 0.5rem;
+  min-height: 56px;
+  text-align: center;
+  font-size: 0.875rem;
+}
+
+.hover-zone {
+  border: 2px dashed #e5e7eb;
+  color: #9ca3af;
+}
+
+.hover-zone:hover {
+  border-color: #2dd4bf;
+  color: #0f766e;
+}
+
+.view-zone {
+  min-height: 120px;
+  border: 2px dashed #99f6e4;
+  background: #f0fdfa;
+  color: #0d9488;
+  font-weight: 500;
+}
+
+.log-section {
+  margin-top: 2rem;
+}
+
+.log-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.clear-button {
+  background: transparent;
+  color: #9ca3af;
+  font-size: 0.75rem;
+}
+
+.clear-button:hover {
+  color: #ef4444;
+}
+
+.log-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0.25rem;
+}
+
+.log-item {
+  padding: 0.5rem 1rem;
+  border: 1px solid #f3f4f6;
+  border-radius: 0.5rem;
+  background: #fff;
+  font-size: 0.875rem;
+}
+
+.event-name {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  color: #0f766e;
+}
+
+.event-data {
+  margin-left: 0.5rem;
+  color: #9ca3af;
+}
+
+@media (min-width: 640px) {
+  .cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
