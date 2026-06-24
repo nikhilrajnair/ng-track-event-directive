@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "build": "ng build tracking",
-    "docs:dev": "vitepress dev docs-src",
+    "docs:dev": "vitepress dev docs-src --port 4000",
     "docs:build": "vitepress build docs-src",
     "docs:build:pages": "VITEPRESS_BASE=/ng-track-event-directive/ vitepress build docs-src",
     "docs:preview": "vitepress preview docs-src",

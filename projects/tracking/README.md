@@ -16,7 +16,8 @@ Peer dependencies:
 
 | Package version | Angular support          | Status   |
 | --------------- | ------------------------ | -------- |
-| 1.4.x           | Angular 22.x             | Current  |
+| 1.5.x           | Angular 22.x             | Current  |
+| 1.4.x           | Angular 22.x             | Previous |
 | 1.0.0–1.3.3     | Angular >=21.2.0 <22.0.0 | Previous |
 
 Angular 20 and earlier are not currently supported.
@@ -25,14 +26,14 @@ Install the version that matches your Angular application:
 
 ```bash
 # Angular 22
-npm install ng-track-event-directive@^1.4.0
+npm install ng-track-event-directive@^1.5.0
 
 # Angular 21.2
 npm install ng-track-event-directive@1.3.3
 ```
 
 For Angular 21.2, pin `1.3.3` exactly. A caret range such as `^1.3.3` can select
-the Angular-22-only `1.4.0` release.
+an Angular-22-only release.
 
 ## Quick Start
 
