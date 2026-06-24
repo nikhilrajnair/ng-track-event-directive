@@ -10,9 +10,25 @@ npm install ng-track-event-directive
 
 ## Compatibility
 
-| Package version | Angular support | Node support                        |
-| --------------- | --------------- | ----------------------------------- |
-| 1.x             | Angular 22      | ^22.22.3 \|\| ^24.15.0 \|\| ^26.0.0 |
+| Package version | Angular support          | Status   |
+| --------------- | ------------------------ | -------- |
+| 1.4.x           | Angular 22.x             | Current  |
+| 1.0.0–1.3.3     | Angular >=21.2.0 <22.0.0 | Previous |
+
+Angular 20 and earlier are not currently supported.
+
+Install the version that matches your Angular application:
+
+```bash
+# Angular 22
+npm install ng-track-event-directive@^1.4.0
+
+# Angular 21.2
+npm install ng-track-event-directive@1.3.3
+```
+
+For Angular 21.2, pin `1.3.3` exactly. A caret range such as `^1.3.3` can select
+the Angular-22-only `1.4.0` release.
 
 ## Quick Start
 
@@ -104,6 +120,6 @@ See the [full API reference](https://nikhilrajnair.github.io/ng-track-event-dire
 
 ## Notes
 
-- Requires Angular 22.
+- Install the package version matching your Angular version in the compatibility table above.
 - `:viewed` requires `IntersectionObserver` support.
 - See the [changelog](./CHANGELOG.md) for releases and migrations.
