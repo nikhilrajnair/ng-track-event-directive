@@ -6,6 +6,7 @@ import {
   inject,
   input,
   NgZone,
+  Renderer2,
   signal,
 } from '@angular/core';
 import { parseTriggerFromEvent } from '../helpers/track.helper';
@@ -14,88 +15,63 @@ import type { TrackConfig } from '../types/track.types';
 
 @Directive({
   selector: '[trackEvent]',
-  host: {
-    '(click)': 'onClick()',
-    '(mouseenter)': 'onMouseEnter()',
-  },
 })
 export class TrackEventDirective {
   private readonly trackingAdapter = injectTrackingAdapter();
   private readonly el = inject(ElementRef<HTMLElement>);
   private readonly zone = inject(NgZone);
+  private readonly renderer = inject(Renderer2);
 
   readonly trackEvent = input.required<TrackConfig>();
 
-  private readonly trigger = computed(() => parseTriggerFromEvent(this.trackEvent().event));
+  private readonly trigger = computed(
+    () => this.trackEvent().trigger ?? parseTriggerFromEvent(this.trackEvent().event),
+  );
   private readonly once = computed(() => this.trackEvent().once ?? this.trigger() === 'view');
 
-  // Keying by event name lets a changed event fire without an explicit reset.
+  // Keying by analytics event and trigger lets either change fire without an explicit reset.
   private readonly firedEventKey = signal<string | null>(null);
 
   constructor() {
     effect((onCleanup) => {
-      // Capture the event name at effect-run time so the observer callback always uses
-      // the config that was active when this observer was created.
+      // Capture the configuration used to create this observer or DOM listener.
       const currentEvent = this.trackEvent().event;
+      const currentTrigger = this.trigger();
 
-      if (this.trigger() !== 'view' || typeof IntersectionObserver === 'undefined') {
+      if (!currentTrigger || currentTrigger === 'unknown') {
+        if (typeof ngDevMode !== 'undefined' && ngDevMode) {
+          console.warn(
+            `[ng-track-event] Event "${currentEvent}" has no trigger. Add a trigger or use a recognised suffix (:clicked, :hovered, :viewed).`,
+          );
+        }
         return;
       }
 
-      let observer: IntersectionObserver | null = null;
+      if (currentTrigger === 'view') {
+        this.observeView(onCleanup);
+        return;
+      }
+
+      const domEventName = currentTrigger === 'hover' ? 'mouseenter' : currentTrigger;
+      let removeListener: (() => void) | null = null;
 
       this.zone.runOutsideAngular(() => {
-        observer = new IntersectionObserver(
-          (entries) => {
-            for (const entry of entries) {
-              if (!entry.isIntersecting) {
-                continue;
-              }
-
-              if (this.once() && this.firedEventKey() === currentEvent) {
-                continue;
-              }
-
-              // Re-enter NgZone so adapter calls and signal writes trigger change detection.
-              this.zone.run(() => this.send());
-
-              if (this.once()) {
-                this.firedEventKey.set(currentEvent);
-                observer?.disconnect();
-                observer = null;
-              }
-            }
-          },
-          { threshold: 0.1 },
-        );
-
-        observer.observe(this.el.nativeElement);
+        removeListener = this.renderer.listen(this.el.nativeElement, domEventName, () => {
+          this.zone.run(() => this.sendOnce());
+        });
       });
 
-      // Disconnect when the input changes or the directive is destroyed.
       onCleanup(() => {
-        observer?.disconnect();
-        observer = null;
+        removeListener?.();
+        removeListener = null;
       });
     });
   }
 
-  protected onClick(): void {
-    if (this.trigger() === 'click') {
-      this.sendOnce();
-    }
-  }
-
-  protected onMouseEnter(): void {
-    if (this.trigger() === 'hover') {
-      this.sendOnce();
-    }
-  }
-
   private sendOnce(): void {
-    const { event } = this.trackEvent();
+    const eventKey = this.eventKey();
 
-    if (this.once() && this.firedEventKey() === event) {
+    if (this.once() && this.firedEventKey() === eventKey) {
       return;
     }
 
@@ -103,18 +79,55 @@ export class TrackEventDirective {
     this.send();
 
     if (this.once()) {
-      this.firedEventKey.set(event);
+      this.firedEventKey.set(eventKey);
     }
+  }
+
+  private observeView(onCleanup: (cleanupFn: () => void) => void): void {
+    if (typeof IntersectionObserver === 'undefined') {
+      return;
+    }
+
+    let observer: IntersectionObserver | null = null;
+
+    this.zone.runOutsideAngular(() => {
+      observer = new IntersectionObserver(
+        (entries) => {
+          for (const entry of entries) {
+            if (!entry.isIntersecting) {
+              continue;
+            }
+
+            if (this.once() && this.firedEventKey() === this.eventKey()) {
+              continue;
+            }
+
+            this.zone.run(() => this.sendOnce());
+
+            if (this.once()) {
+              observer?.disconnect();
+              observer = null;
+            }
+          }
+        },
+        { threshold: 0.1 },
+      );
+
+      observer.observe(this.el.nativeElement);
+    });
+
+    onCleanup(() => {
+      observer?.disconnect();
+      observer = null;
+    });
+  }
+
+  private eventKey(): string {
+    return `${this.trackEvent().event}\u0000${this.trigger()}`;
   }
 
   private send(): void {
     const { event, data } = this.trackEvent();
-
-    if (typeof ngDevMode !== 'undefined' && ngDevMode && this.trigger() === 'unknown') {
-      console.warn(
-        `[ng-track-event] Event "${event}" has no recognised trigger suffix (:clicked, :hovered, :viewed).`,
-      );
-    }
 
     if (!event) {
       return;

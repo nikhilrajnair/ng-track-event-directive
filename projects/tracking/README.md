@@ -96,17 +96,31 @@ trackConfig('save:clicked', undefined, true); // first click only
 trackConfig('promo:viewed', { campaign: 'summer' }, false); // every view
 ```
 
+Use an explicit trigger for standard or custom DOM events that should not be inferred from the
+analytics event name:
+
+```ts
+trackConfig('search:focused', { source: 'header' }, { trigger: 'focus' });
+trackConfig('dialog:opened', undefined, { trigger: 'dialog-opened', once: true });
+```
+
+The explicit trigger takes precedence over any event-name suffix. Only configured `data` is sent
+to the adapter; DOM events and `CustomEvent.detail` are not forwarded automatically.
+
 ## `TrackConfig`
 
 ```ts
 interface TrackConfig<E extends string = string, D = unknown> {
   event: E;
   data?: D;
+  trigger?: TrackTrigger;
   once?: boolean;
 }
 ```
 
-The `trackConfig(event, data?, once?)` helper creates this object while preserving event and payload types.
+The `trackConfig(event, data?, onceOrOptions?)` helper creates this object while preserving event
+and payload types. Its third argument accepts the existing `once` boolean or a `TrackOptions`
+object containing `trigger` and `once`.
 
 ## Provider Examples
 
@@ -165,6 +179,7 @@ export const segmentAdapter: TrackingAdapter = {
 | `TRACKING_ADAPTER`       | Adapter injection token                      |
 | `parseTriggerFromEvent`  | Resolves a trigger from an event-name suffix |
 | `TrackConfig`            | Directive input type                         |
+| `TrackOptions`           | Explicit trigger and one-time options        |
 | `TrackTrigger`           | Trigger type                                 |
 | `TrackingAdapter`        | Analytics adapter contract                   |
 

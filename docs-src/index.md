@@ -4,7 +4,7 @@ layout: home
 hero:
   name: ng-track-event-directive
   text: Declarative Analytics Tracking for Angular
-  tagline: Track click, hover, and view events without wiring repetitive listeners.
+  tagline: Track click, hover, view, and custom DOM events without wiring repetitive listeners.
   actions:
     - theme: brand
       text: Get Started
@@ -17,8 +17,8 @@ hero:
       link: https://stackblitz.com/edit/stackblitz-starters-hsdpibzj?file=package.json
 
 features:
-  - title: Event-Name Driven Triggers
-    details: Use event suffixes like :clicked, :hovered, and :viewed to infer trigger behavior automatically.
+  - title: Flexible Event Triggers
+    details: Infer click, hover, and view behavior from suffixes or configure any standard or custom DOM event explicitly.
   - title: Adapter-Based by Design
     details: Keep your analytics provider choice flexible with a tiny TrackingAdapter interface.
   - title: Built for Angular 22

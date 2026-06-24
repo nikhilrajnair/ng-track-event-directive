@@ -30,4 +30,15 @@ describe('trackConfig', () => {
   it('omits optional fields when not provided', () => {
     expect(trackConfig('users:clicked')).toEqual({ event: 'users:clicked' });
   });
+
+  it('builds config with trigger options', () => {
+    expect(
+      trackConfig('dialog:opened', { source: 'toolbar' }, { trigger: 'dialog-opened', once: true }),
+    ).toEqual({
+      event: 'dialog:opened',
+      data: { source: 'toolbar' },
+      trigger: 'dialog-opened',
+      once: true,
+    });
+  });
 });

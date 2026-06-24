@@ -70,7 +70,7 @@ export class AppComponent {
 }
 ```
 
-## Event Suffixes
+## Event Triggers
 
 The event-name suffix selects the trigger automatically.
 
@@ -85,6 +85,16 @@ Override the default when needed:
 ```ts
 trackConfig('promo:viewed', { campaign: 'summer' }, false);
 ```
+
+Use an explicit trigger when the analytics event name and DOM event should be independent:
+
+```ts
+trackConfig('search:focused', { source: 'header' }, { trigger: 'focus' });
+trackConfig('dialog:opened', undefined, { trigger: 'dialog-opened', once: true });
+```
+
+Explicit triggers support standard and custom DOM events. Event payloads are never forwarded
+automatically; only the configured `data` is sent to the tracking adapter.
 
 ## Adapter Concept
 
@@ -114,7 +124,7 @@ If the production demo build crashes locally on macOS ARM64 or Node 24 because o
 - `provideTrackingAdapter` — registers an analytics adapter
 - `TRACKING_ADAPTER` — adapter injection token
 - `parseTriggerFromEvent` — resolves a trigger from an event suffix
-- `TrackConfig`, `TrackTrigger`, `TrackingAdapter` — public types
+- `TrackConfig`, `TrackOptions`, `TrackTrigger`, `TrackingAdapter` — public types
 
 See the [full API reference](https://nikhilrajnair.github.io/ng-track-event-directive/api/).
 

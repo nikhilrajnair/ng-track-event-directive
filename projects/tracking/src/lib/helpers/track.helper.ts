@@ -1,5 +1,5 @@
 import { SUFFIX_TRIGGER_MAP } from './track.constants';
-import type { TrackConfig, TrackTrigger } from '../types/track.types';
+import type { TrackConfig, TrackOptions, TrackTrigger } from '../types/track.types';
 
 export function parseTriggerFromEvent(event: string): TrackTrigger {
   const triggerSuffix = event.slice(event.lastIndexOf(':') + 1);
@@ -9,7 +9,15 @@ export function parseTriggerFromEvent(event: string): TrackTrigger {
 export function trackConfig<E extends string, D = unknown>(
   event: E,
   data?: D,
-  once?: boolean,
+  onceOrOptions?: boolean | TrackOptions,
 ): TrackConfig<E, D> {
-  return { event, ...(data !== undefined && { data }), ...(once !== undefined && { once }) };
+  const options: TrackOptions =
+    typeof onceOrOptions === 'boolean' ? { once: onceOrOptions } : (onceOrOptions ?? {});
+
+  return {
+    event,
+    ...(data !== undefined && { data }),
+    ...(options.trigger !== undefined && { trigger: options.trigger }),
+    ...(options.once !== undefined && { once: options.once }),
+  };
 }
