@@ -1,2 +1,4 @@
-docs/
+docs/.vitepress/dist
+docs/.vitepress/dist-pages
+docs/.vitepress/cache
 CHANGELOG.md
