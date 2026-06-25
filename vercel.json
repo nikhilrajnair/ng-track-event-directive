@@ -1,5 +1,5 @@
 {
   "buildCommand": "npm run docs:build",
-  "outputDirectory": "docs",
+  "outputDirectory": "docs/.vitepress/dist",
   "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
 }

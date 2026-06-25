@@ -1,10 +1,15 @@
+import { resolve } from 'node:path';
+
 const docsBase = process.env.VITEPRESS_BASE || '/';
+const docsOutDir = process.env.VITEPRESS_OUT_DIR
+  ? resolve(process.cwd(), process.env.VITEPRESS_OUT_DIR)
+  : undefined;
 
 export default {
   title: 'ng-track-event-directive',
   description: 'Declarative analytics event tracking for Angular apps',
   base: docsBase,
-  outDir: '../docs',
+  outDir: docsOutDir,
   lastUpdated: true,
   cleanUrls: true,
   themeConfig: {
