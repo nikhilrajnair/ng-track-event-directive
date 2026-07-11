@@ -4,14 +4,6 @@ on:
   push:
     branches:
       - main
-    paths-ignore:
-      - '.github/workflows/**'
-      - 'docs/**'
-      - '**/*.md'
-
-concurrency:
-  group: release-${{ github.ref }}
-  cancel-in-progress: false
 
 permissions:
   contents: write
