@@ -1,20 +1,13 @@
 import { parseTriggerFromEvent, trackConfig } from './track.helper';
 
 describe('parseTriggerFromEvent', () => {
-  it('returns click for clicked suffix', () => {
-    expect(parseTriggerFromEvent('save:clicked')).toBe('click');
-  });
-
-  it('returns view for viewed suffix', () => {
-    expect(parseTriggerFromEvent('list:viewed')).toBe('view');
-  });
-
-  it('returns hover for hovered suffix', () => {
-    expect(parseTriggerFromEvent('icon:hovered')).toBe('hover');
-  });
-
-  it('returns unknown for unmapped suffix', () => {
-    expect(parseTriggerFromEvent('anything:opened')).toBe('unknown');
+  it.each([
+    ['save:clicked', 'click'],
+    ['list:viewed', 'view'],
+    ['icon:hovered', 'hover'],
+    ['anything:opened', 'unknown'],
+  ] as const)('maps %s to %s', (event, trigger) => {
+    expect(parseTriggerFromEvent(event)).toBe(trigger);
   });
 });
 

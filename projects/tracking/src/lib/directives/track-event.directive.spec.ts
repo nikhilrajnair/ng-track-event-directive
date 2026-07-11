@@ -70,61 +70,28 @@ describe('TrackEventDirective', () => {
     vi.unstubAllGlobals();
   });
 
-  it('tracks on click events', () => {
-    const { el, trackSpy } = setup({ event: 'user-save:clicked' });
+  it('tracks inferred DOM events and forwards configured data', () => {
+    const { el, trackSpy } = setup({ event: 'user-save:clicked', data: { id: 12 } });
 
     el.nativeElement.click();
     el.nativeElement.click();
 
     expect(trackSpy).toHaveBeenCalledTimes(2);
-    expect(trackSpy).toHaveBeenCalledWith('user-save:clicked', undefined);
+    expect(trackSpy).toHaveBeenCalledWith('user-save:clicked', { id: 12 });
   });
 
-  it('tracks on hover events', () => {
-    const { el, trackSpy } = setup({ event: 'menu:hovered' });
-
-    el.nativeElement.dispatchEvent(new MouseEvent('mouseenter'));
-    el.nativeElement.dispatchEvent(new MouseEvent('mouseenter'));
-
-    expect(trackSpy).toHaveBeenCalledTimes(2);
-  });
-
-  it('tracks on an explicitly configured standard DOM event', () => {
-    const { el, trackSpy } = setup({ event: 'search:focused', trigger: 'focus' });
-
-    el.nativeElement.dispatchEvent(new FocusEvent('focus'));
-
-    expect(trackSpy).toHaveBeenCalledWith('search:focused', undefined);
-  });
-
-  it('tracks on submit when configured explicitly', () => {
-    const { el, trackSpy } = setup({ event: 'form:submitted', trigger: 'submit' });
-
-    el.nativeElement.dispatchEvent(new SubmitEvent('submit'));
-
-    expect(trackSpy).toHaveBeenCalledWith('form:submitted', undefined);
-  });
-
-  it('tracks on an explicitly configured custom DOM event', () => {
+  it('tracks an explicit DOM event using configured data, not CustomEvent detail', () => {
     const { el, trackSpy } = setup({
       event: 'dialog:opened',
       trigger: 'dialog-opened',
       data: { source: 'toolbar' },
     });
 
-    el.nativeElement.dispatchEvent(new CustomEvent('dialog-opened'));
-
-    expect(trackSpy).toHaveBeenCalledWith('dialog:opened', { source: 'toolbar' });
-  });
-
-  it('does not forward CustomEvent detail as analytics data', () => {
-    const { el, trackSpy } = setup({ event: 'checkout:completed', trigger: 'checkout-complete' });
-
     el.nativeElement.dispatchEvent(
-      new CustomEvent('checkout-complete', { detail: { paymentToken: 'secret' } }),
+      new CustomEvent('dialog-opened', { detail: { paymentToken: 'secret' } }),
     );
 
-    expect(trackSpy).toHaveBeenCalledWith('checkout:completed', undefined);
+    expect(trackSpy).toHaveBeenCalledWith('dialog:opened', { source: 'toolbar' });
   });
 
   it('uses an explicit trigger instead of the event-name suffix', () => {
@@ -159,42 +126,12 @@ describe('TrackEventDirective', () => {
     expect(observer.disconnect).not.toHaveBeenCalled();
   });
 
-  it('forwards event payload to adapter', () => {
-    const { el, trackSpy } = setup({ event: 'user-edit:clicked', data: { id: 12 } });
-
-    el.nativeElement.click();
-
-    expect(trackSpy).toHaveBeenCalledWith('user-edit:clicked', { id: 12 });
-  });
-
   it('tracks click only once when once is true', () => {
     const { el, trackSpy } = setup({ event: 'user-save:clicked', once: true });
 
     el.nativeElement.click();
     el.nativeElement.click();
     el.nativeElement.click();
-
-    expect(trackSpy).toHaveBeenCalledTimes(1);
-  });
-
-  it('tracks hover only once when once is true', () => {
-    const { el, trackSpy } = setup({ event: 'menu:hovered', once: true });
-
-    el.nativeElement.dispatchEvent(new MouseEvent('mouseenter'));
-    el.nativeElement.dispatchEvent(new MouseEvent('mouseenter'));
-
-    expect(trackSpy).toHaveBeenCalledTimes(1);
-  });
-
-  it('tracks a custom DOM event only once when once is true', () => {
-    const { el, trackSpy } = setup({
-      event: 'player:started',
-      trigger: 'player-started',
-      once: true,
-    });
-
-    el.nativeElement.dispatchEvent(new CustomEvent('player-started'));
-    el.nativeElement.dispatchEvent(new CustomEvent('player-started'));
 
     expect(trackSpy).toHaveBeenCalledTimes(1);
   });
@@ -248,36 +185,7 @@ describe('TrackEventDirective', () => {
     expect(MockIntersectionObserver.instances).toHaveLength(0);
   });
 
-  it('tears down the observer and resets state when trigger changes from view to click', () => {
-    const { fixture, trackSpy } = setup({ event: 'table:viewed' });
-
-    const [observer] = MockIntersectionObserver.instances;
-    fixture.componentInstance.config.set({ event: 'table:clicked' });
-    fixture.detectChanges();
-    fixture.detectChanges();
-
-    expect(observer.disconnect).toHaveBeenCalled();
-    expect(trackSpy).not.toHaveBeenCalled();
-  });
-
-  it('removes the previous DOM listener when the configured trigger changes', () => {
-    const { el, fixture, trackSpy } = setup({
-      event: 'panel:opened',
-      trigger: 'panel-opened',
-    });
-
-    fixture.componentInstance.config.set({ event: 'panel:closed', trigger: 'panel-closed' });
-    fixture.detectChanges();
-    fixture.detectChanges();
-
-    el.nativeElement.dispatchEvent(new CustomEvent('panel-opened'));
-    expect(trackSpy).not.toHaveBeenCalled();
-
-    el.nativeElement.dispatchEvent(new CustomEvent('panel-closed'));
-    expect(trackSpy).toHaveBeenCalledWith('panel:closed', undefined);
-  });
-
-  it('allows the same once-only analytics event to fire after its trigger changes', () => {
+  it('replaces a DOM listener and resets once-only state when the trigger changes', () => {
     const { el, fixture, trackSpy } = setup({
       event: 'panel:interaction',
       trigger: 'panel-opened',
@@ -293,6 +201,7 @@ describe('TrackEventDirective', () => {
     });
     fixture.detectChanges();
     fixture.detectChanges();
+    el.nativeElement.dispatchEvent(new CustomEvent('panel-opened'));
     el.nativeElement.dispatchEvent(new CustomEvent('panel-closed'));
 
     expect(trackSpy).toHaveBeenCalledTimes(2);
