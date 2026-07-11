@@ -1,0 +1,74 @@
+name: Manual Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to publish, for example 1.6.1'
+        required: true
+        type: string
+
+permissions:
+  contents: write
+  id-token: write
+
+concurrency:
+  group: manual-release
+  cancel-in-progress: false
+
+jobs:
+  release:
+    name: Manual Release
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24.x'
+          cache: npm
+          registry-url: https://registry.npmjs.org
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Check version
+        env:
+          VERSION: ${{ inputs.version }}
+        run: |
+          test -n "$VERSION"
+          npm view "ng-track-event-directive@$VERSION" version >/dev/null 2>&1 && {
+            echo "ng-track-event-directive@$VERSION already exists on npm"
+            exit 1
+          }
+          git ls-remote --exit-code --tags origin "refs/tags/v$VERSION" >/dev/null 2>&1 && {
+            echo "Tag v$VERSION already exists"
+            exit 1
+          }
+          exit 0
+
+      - name: Build library
+        run: npm run build
+
+      - name: Publish to npm
+        env:
+          VERSION: ${{ inputs.version }}
+          NODE_AUTH_TOKEN: ${{ secrets.NGTRACKEVENT }}
+        run: |
+          cd dist/tracking
+          npm version "$VERSION" --no-git-tag-version
+          npm publish --access public --provenance
+
+      - name: Create GitHub release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VERSION: ${{ inputs.version }}
+        run: |
+          git tag "v$VERSION"
+          git push origin "v$VERSION"
+          gh release create "v$VERSION" --title "v$VERSION" --notes "Manual release v$VERSION"
