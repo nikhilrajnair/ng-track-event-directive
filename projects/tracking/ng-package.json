@@ -3,5 +3,6 @@
   "dest": "../../dist/tracking",
   "lib": {
     "entryFile": "src/public-api.ts"
-  }
+  },
+  "assets": ["assets"]
 }

@@ -1,6 +1,7 @@
 import { resolve } from 'node:path';
 
 const docsBase = process.env.VITEPRESS_BASE || '/';
+const docsAssetBase = docsBase.endsWith('/') ? docsBase : `${docsBase}/`;
 const docsOutDir = process.env.VITEPRESS_OUT_DIR
   ? resolve(process.cwd(), process.env.VITEPRESS_OUT_DIR)
   : undefined;
@@ -10,9 +11,34 @@ export default {
   description: 'Declarative analytics event tracking for Angular apps',
   base: docsBase,
   outDir: docsOutDir,
+  head: [
+    [
+      'link',
+      { rel: 'icon', type: 'image/png', href: `${docsAssetBase}ng-track-event-shield-250.png` },
+    ],
+    ['link', { rel: 'apple-touch-icon', href: `${docsAssetBase}ng-track-event-shield-250.png` }],
+    [
+      'meta',
+      {
+        property: 'og:image',
+        content:
+          'https://nikhilrajnair.github.io/ng-track-event-directive/ng-track-event-shield-1024.png',
+      },
+    ],
+    ['meta', { name: 'twitter:card', content: 'summary_large_image' }],
+    [
+      'meta',
+      {
+        name: 'twitter:image',
+        content:
+          'https://nikhilrajnair.github.io/ng-track-event-directive/ng-track-event-shield-1024.png',
+      },
+    ],
+  ],
   lastUpdated: true,
   cleanUrls: true,
   themeConfig: {
+    logo: '/ng-track-event-shield-250.png',
     nav: [
       { text: 'Guide', link: '/getting-started' },
       { text: 'API', link: '/api/' },

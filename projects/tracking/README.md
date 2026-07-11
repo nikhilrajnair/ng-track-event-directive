@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="https://raw.githubusercontent.com/nikhilrajnair/ng-track-event-directive/main/projects/tracking/assets/ng-track-event-shield-250.png" width="120" height="120" alt="ng-track-event-directive shield logo" />
+</p>
+
 # ng-track-event-directive
 
 A lightweight Angular directive that replaces repetitive event listeners with declarative analytics tracking in templates.

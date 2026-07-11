@@ -5,6 +5,9 @@ hero:
   name: ng-track-event-directive
   text: Declarative Analytics Tracking for Angular
   tagline: Track click, hover, view, and custom DOM events without wiring repetitive listeners.
+  image:
+    src: /ng-track-event-shield-250.png
+    alt: ng-track-event-directive shield logo
   actions:
     - theme: brand
       text: Get Started
