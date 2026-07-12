@@ -26,15 +26,15 @@ uphold it. Please report unacceptable behavior as described there.
 
 Common scripts:
 
-| Command | What it does |
-| --- | --- |
-| `npm run test` | Run the unit tests once |
-| `npm run test:coverage` | Run tests with coverage |
-| `npm run build` | Build the `tracking` library |
-| `npm run demo:start` | Serve the demo app |
-| `npm run docs:dev` | Serve the documentation site locally |
-| `npm run prettier` | Check formatting |
-| `npm run prettier:fix` | Auto-format the codebase |
+| Command                 | What it does                         |
+| ----------------------- | ------------------------------------ |
+| `npm run test`          | Run the unit tests once              |
+| `npm run test:coverage` | Run tests with coverage              |
+| `npm run build`         | Build the `tracking` library         |
+| `npm run demo:start`    | Serve the demo app                   |
+| `npm run docs:dev`      | Serve the documentation site locally |
+| `npm run prettier`      | Check formatting                     |
+| `npm run prettier:fix`  | Auto-format the codebase             |
 
 Before opening a pull request, please make sure the same checks that run in CI
 pass locally:

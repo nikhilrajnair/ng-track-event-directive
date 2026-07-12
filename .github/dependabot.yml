@@ -2,7 +2,7 @@ version: 2
 updates:
   # Keep npm dependencies up to date
   - package-ecosystem: npm
-    directory: "/"
+    directory: '/'
     schedule:
       interval: weekly
     open-pull-requests-limit: 10
@@ -14,14 +14,14 @@ updates:
     groups:
       angular:
         patterns:
-          - "@angular/*"
-          - "ng-packagr"
+          - '@angular/*'
+          - 'ng-packagr'
       dev-dependencies:
         dependency-type: development
 
   # Keep GitHub Actions up to date
   - package-ecosystem: github-actions
-    directory: "/"
+    directory: '/'
     schedule:
       interval: weekly
     labels:
