@@ -43,7 +43,6 @@ import { TrackEventDirective, trackConfig } from 'ng-track-event-directive';
 
 @Component({
   selector: 'app-root',
-  standalone: true,
   imports: [TrackEventDirective],
   template: `
     <button [trackEvent]="trackConfig('signup:clicked', { source: 'hero' })">Sign up</button>
