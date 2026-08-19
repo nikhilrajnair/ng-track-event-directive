@@ -22,8 +22,8 @@
     },
     {
       "label": "Docs: start",
-      "type": "shell",
-      "command": "npx vitepress dev docs --port 4000",
+      "type": "npm",
+      "script": "docs:dev",
       "isBackground": true,
       "problemMatcher": [],
       "runOptions": {

@@ -36,6 +36,12 @@ Common scripts:
 | `npm run prettier`      | Check formatting                     |
 | `npm run prettier:fix`  | Auto-format the codebase             |
 
+VS Code starts the documentation site automatically at `http://localhost:4000/`
+when this repository opens. This is separate from the Angular demo at
+`http://localhost:4200/`, which you can start with `npm run demo:start`. To start
+the documentation manually, use `npm run docs:dev`; running bare `npx vitepress`
+from the repository root uses the wrong site root and displays a 404 page.
+
 Before opening a pull request, please make sure the same checks that run in CI
 pass locally:
 
