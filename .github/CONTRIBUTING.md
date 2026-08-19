@@ -54,9 +54,11 @@ npm run build
 ## Commit messages
 
 This project uses [Conventional Commits](https://www.conventionalcommits.org/)
-and [semantic-release](https://semantic-release.gitbook.io/). The commit history
-drives the version number and changelog, so please format your commits
-accordingly. Examples:
+and [semantic-release](https://semantic-release.gitbook.io/). The automated
+release workflow publishes releases from `feat`, `fix`, or `perf` commits;
+breaking changes create a major release. The manual release workflow remains
+available for emergencies and exceptions. Please format commits accordingly.
+Examples:
 
 - `feat: add view trigger threshold option`
 - `fix: prevent duplicate events on rapid hover`

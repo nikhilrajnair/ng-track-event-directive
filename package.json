@@ -14,6 +14,7 @@
     "build:watch": "ng build tracking --watch --configuration development",
     "test": "ng test tracking --watch=false",
     "test:coverage": "ng test tracking --watch=false --coverage",
+    "audit:security": "npm audit --audit-level=low",
     "prettier": "prettier . --check",
     "prettier:fix": "prettier . --write",
     "semantic-release": "semantic-release",
@@ -26,31 +27,38 @@
     "node": "^22.22.3 || ^24.15.0 || ^26.0.0"
   },
   "dependencies": {
-    "@angular/common": "^22.0.0",
-    "@angular/compiler": "^22.0.0",
-    "@angular/core": "^22.0.0",
-    "@angular/forms": "^22.0.0",
-    "@angular/platform-browser": "^22.0.0",
-    "@angular/router": "^22.0.0",
+    "@angular/common": "^22.1.2",
+    "@angular/compiler": "^22.1.2",
+    "@angular/core": "^22.1.2",
+    "@angular/forms": "^22.1.2",
+    "@angular/platform-browser": "^22.1.2",
+    "@angular/router": "^22.1.2",
     "mixpanel-browser": "^2.82.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0"
   },
   "devDependencies": {
-    "@angular/build": "^22.0.0",
-    "@angular/cli": "^22.0.0",
-    "@angular/compiler-cli": "^22.0.0",
+    "@angular/build": "^22.1.4",
+    "@angular/cli": "^22.1.4",
+    "@angular/compiler-cli": "^22.1.2",
     "@semantic-release/github": "^11.0.6",
     "@semantic-release/npm": "^13.1.5",
     "@semantic-release/release-notes-generator": "^14.1.1",
-    "@vitest/coverage-v8": "^4.1.5",
+    "@vitest/coverage-v8": "^4.1.11",
     "conventional-changelog-conventionalcommits": "^9.3.1",
     "happy-dom": "^20.0.5",
-    "ng-packagr": "^22.0.0",
+    "ng-packagr": "^22.1.1",
     "prettier": "^3.8.1",
-    "semantic-release": "^25.0.6",
+    "semantic-release": "^25.0.9",
     "typescript": "~6.0.3",
     "vitepress": "^1.6.4",
-    "vitest": "^4.1.5"
+    "vitest": "^4.1.11"
+  },
+  "overrides": {
+    "vitepress": {
+      "@vitejs/plugin-vue": "^6.0.8",
+      "esbuild": "^0.28.2",
+      "vite": "^8.2.1"
+    }
   }
 }
