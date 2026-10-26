@@ -39,7 +39,7 @@
   },
   "devDependencies": {
     "@angular/build": "^22.1.4",
-    "@angular/cli": "^22.1.4",
+    "@angular/cli": "^22.2.4",
     "@angular/compiler-cli": "^22.1.2",
     "@semantic-release/github": "^11.0.6",
     "@semantic-release/npm": "^13.1.5",
