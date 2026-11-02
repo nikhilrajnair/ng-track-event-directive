@@ -6,6 +6,8 @@ describe('parseTriggerFromEvent', () => {
     ['list:viewed', 'view'],
     ['icon:hovered', 'hover'],
     ['anything:opened', 'unknown'],
+    ['x:constructor', 'unknown'],
+    ['x:toString', 'unknown'],
   ] as const)('maps %s to %s', (event, trigger) => {
     expect(parseTriggerFromEvent(event)).toBe(trigger);
   });
