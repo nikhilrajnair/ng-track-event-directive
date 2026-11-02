@@ -7,7 +7,6 @@ import {
   input,
   NgZone,
   Renderer2,
-  signal,
 } from '@angular/core';
 import { parseTriggerFromEvent } from '../helpers/track.helper';
 import { injectTrackingAdapter } from '../providers/tracking-adapter';
@@ -30,7 +29,7 @@ export class TrackEventDirective {
   private readonly once = computed(() => this.trackEvent().once ?? this.trigger() === 'view');
 
   // Keying by analytics event and trigger lets either change fire without an explicit reset.
-  private readonly firedEventKey = signal<string | null>(null);
+  private firedEventKey: string | null = null;
 
   constructor() {
     effect((onCleanup) => {
@@ -71,7 +70,7 @@ export class TrackEventDirective {
   private sendOnce(): void {
     const eventKey = this.eventKey();
 
-    if (this.once() && this.firedEventKey() === eventKey) {
+    if (this.once() && this.firedEventKey === eventKey) {
       return;
     }
 
@@ -79,7 +78,7 @@ export class TrackEventDirective {
     this.send();
 
     if (this.once()) {
-      this.firedEventKey.set(eventKey);
+      this.firedEventKey = eventKey;
     }
   }
 
@@ -95,10 +94,6 @@ export class TrackEventDirective {
         (entries) => {
           for (const entry of entries) {
             if (!entry.isIntersecting) {
-              continue;
-            }
-
-            if (this.once() && this.firedEventKey() === this.eventKey()) {
               continue;
             }
 

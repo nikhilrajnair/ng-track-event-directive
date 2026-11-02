@@ -3,7 +3,9 @@ import type { TrackConfig, TrackOptions, TrackTrigger } from '../types/track.typ
 
 export function parseTriggerFromEvent(event: string): TrackTrigger {
   const triggerSuffix = event.slice(event.lastIndexOf(':') + 1);
-  return SUFFIX_TRIGGER_MAP[triggerSuffix] ?? 'unknown';
+  return Object.hasOwn(SUFFIX_TRIGGER_MAP, triggerSuffix)
+    ? SUFFIX_TRIGGER_MAP[triggerSuffix]
+    : 'unknown';
 }
 
 export function trackConfig<E extends string, D = unknown>(
