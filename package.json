@@ -51,14 +51,7 @@
     "prettier": "^3.9.10",
     "semantic-release": "^25.0.9",
     "typescript": "~6.0.3",
-    "vitepress": "^1.6.4",
+    "vitepress": "^2.0.0-alpha.21",
     "vitest": "^5.0.5"
-  },
-  "overrides": {
-    "vitepress": {
-      "@vitejs/plugin-vue": "^6.0.8",
-      "esbuild": "^0.28.2",
-      "vite": "^8.2.1"
-    }
   }
 }
